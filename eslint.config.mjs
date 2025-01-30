@@ -12,6 +12,11 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
 });
 
+/**
+ * TODO: Support Tailwind CSS v4 in eslint-plugin-tailwindcss
+ * Issue: https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/325
+ */
+
 const eslintConfig = [
   ...compat.config({
     extends: [

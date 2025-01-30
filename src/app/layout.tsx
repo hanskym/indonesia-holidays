@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
 import { siteConfig } from '@/config/site';
-import { geistMono, geistSans } from '@/lib/fonts';
+import { mono, sans } from '@/lib/fonts';
 
 import '@/styles/globals.css';
 
@@ -70,7 +70,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+      <body className={`${sans.variable} ${mono.variable}`}>{children}</body>
     </html>
   );
 }

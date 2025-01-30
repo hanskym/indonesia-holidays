@@ -1,84 +1,67 @@
-import Image from 'next/image';
-
-import ReadMe from '@/components/readme';
-
-import styles from '@/styles/page.module.css';
-
 export default function Home() {
   return (
-    <div>
-      <div className={styles.page}>
-        <main className={styles.main}>
-          <Image
-            alt="Next.js logo"
-            className={styles.logo}
-            height={38}
-            priority
-            src="/next.svg"
-            width={180}
-          />
-          <ol>
-            <li>
-              Get started by editing <code>src/app/page.tsx</code>.
-            </li>
-            <li>Save and see your changes instantly.</li>
-          </ol>
-
-          <div className={styles.ctas}>
-            <a
-              className={styles.primary}
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Image
-                alt="Vercel logomark"
-                className={styles.logo}
-                height={20}
-                src="/vercel.svg"
-                width={20}
-              />
-              Deploy now
-            </a>
-            <a
-              className={styles.secondary}
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Read our docs
-            </a>
+    <div className="bg-gray-200 font-sans leading-normal tracking-normal">
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <h1 className="mb-6 text-4xl font-bold">We&apos;re launching soon</h1>
+            <p className="mb-12 text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis ultricies
+              rhoncus. Quisque a vestibulum erat. Donec eu elementum urna. Sed eget eros id turpis
+              rutrum sollicitudin. Sed quis iaculis odio. Morbi id neque at turpis laoreet semper
+              sit amet vitae turpis. Mauris fermentum venenatis metus in vehicula. Donec sit amet
+              fringilla lorem. Maecenas sit amet pretium orci. Nullam maximus, ex sit amet tincidunt
+              egestas, quam mi feugiat massa, vel luctus tellus diam ac quam.
+            </p>
           </div>
-        </main>
+        </div>
+      </section>
 
-        <footer className={styles.footer}>
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Image alt="File icon" aria-hidden height={16} src="/file.svg" width={16} />
-            Learn
-          </a>
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Image alt="Window icon" aria-hidden height={16} src="/window.svg" width={16} />
-            Examples
-          </a>
-          <a
-            href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Image alt="Globe icon" aria-hidden height={16} src="/globe.svg" width={16} />
-            Go to nextjs.org →
-          </a>
-        </footer>
-      </div>
-      <ReadMe />
+      <section className="bg-gray-200 py-20">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="mb-6 text-3xl font-bold">What to expect</h2>
+            <p className="mb-12 text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
+              aliquam euismod eget a leo. Sed eget orci feugiat, porttitor nibh vel, faucibus
+              mauris.
+            </p>
+          </div>
+          <div className="-mx-4 mt-12 flex flex-wrap">
+            <div className="mb-8 w-full px-4 md:w-1/3">
+              <div className="rounded-md bg-white p-8 shadow-md">
+                <div className="mb-4 text-4xl font-bold text-purple-600">01</div>
+                <h3 className="mb-4 text-2xl font-bold">Feature 1</h3>
+                <p className="mb-4 text-gray-600">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
+                  aliquam euismod eget a leo.
+                </p>
+              </div>
+            </div>
+            <div className="mb-8 w-full px-4 md:w-1/3">
+              <div className="rounded-md bg-white p-8 shadow-md">
+                <div className="mb-4 text-4xl font-bold text-purple-600">02</div>
+                <h3 className="mb-4 text-2xl font-bold">Feature 2</h3>
+                <p className="mb-4 text-gray-600">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
+                  aliquam euismod eget a leo.
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-8 w-full px-4 md:w-1/3">
+              <div className="rounded-md bg-white p-8 shadow-md">
+                <div className="mb-4 text-4xl font-bold text-purple-600">03</div>
+                <h3 className="mb-4 text-2xl font-bold">Feature 3</h3>
+                <p className="mb-4 text-gray-600">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
+                  aliquam euismod eget a leo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
