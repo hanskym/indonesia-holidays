@@ -1,67 +1,100 @@
-export default function Home() {
+import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
+
+import type { GetHolidayEntriesResponse } from '@/types/holiday';
+
+import { NEXT_BASE_URL } from '@/lib/constants';
+import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
+
+export default async function Home() {
+  const response = await fetch(`${NEXT_BASE_URL}/api/holidays`, {
+    cache: 'no-store',
+  });
+  const { data } = await response.json();
+  const holidays: GetHolidayEntriesResponse = data;
+
+  const todayHoliday = await getTodayHoliday(holidays);
+  const nextHolidays = await getUpcomingHolidays(holidays, 4);
+
+  const upcomingHolidays = todayHoliday ? nextHolidays.slice(0, 3) : nextHolidays.slice(1, 4);
+  const nextHoliday = todayHoliday ? nextHolidays[0] : nextHolidays[0];
+
   return (
-    <div className="bg-gray-200 font-sans leading-normal tracking-normal">
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h1 className="mb-6 text-4xl font-bold">We&apos;re launching soon</h1>
-            <p className="mb-12 text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur mollis ultricies
-              rhoncus. Quisque a vestibulum erat. Donec eu elementum urna. Sed eget eros id turpis
-              rutrum sollicitudin. Sed quis iaculis odio. Morbi id neque at turpis laoreet semper
-              sit amet vitae turpis. Mauris fermentum venenatis metus in vehicula. Donec sit amet
-              fringilla lorem. Maecenas sit amet pretium orci. Nullam maximus, ex sit amet tincidunt
-              egestas, quam mi feugiat massa, vel luctus tellus diam ac quam.
-            </p>
+    <div className="min-h-screen flex flex-col bg-gray-50 font-sans leading-normal tracking-normal">
+      {/* Header */}
+      <header className="bg-black text-white py-4">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-semibold">Libur</h1>
+            <nav>
+              <ul className="flex space-x-8">
+                <li>
+                  <a href="#" className="hover:text-gray-300 transition-colors">
+                    Tentang
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
-      </section>
+      </header>
 
-      <section className="bg-gray-200 py-20">
+      {/* Main Content */}
+      <main className="flex-grow">
+        <div className="container mx-auto px-4 py-12">
+          {/* Hero Section */}
+          <section className="max-w-2xl mx-auto text-center mb-16">
+            <h1 className="text-2xl font-semibold mb-6">
+              {format(new Date(), 'EEEE, dd MMMM yyyy', { locale: id })}
+            </h1>
+            {todayHoliday ? (
+              <>
+                <h2 className="text-5xl font-semibold mb-6">Hari Ini Libur!</h2>
+                <p className="text-xl text-gray-800 mb-12">{todayHoliday.holiday_name}</p>
+              </>
+            ) : nextHoliday ? (
+              <>
+                <h2 className="text-5xl font-semibold mb-6">Libur Nasional Berikutnya</h2>
+                <p className="text-xl text-gray-800 mb-12">
+                  {nextHoliday.holiday_name} -{' '}
+                  {format(new Date(nextHoliday.holiday_date), 'EEEE, dd MMMM yyyy', { locale: id })}
+                  <br />
+                  <span className="text-gray-600 text-base">{nextHoliday.daysUntil} hari lagi</span>
+                </p>
+              </>
+            ) : (
+              <h2 className="text-5xl font-semibold mb-6">Tidak ada hari libur mendatang</h2>
+            )}
+          </section>
+
+          {/* Cards Section */}
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {upcomingHolidays.map((holiday, index) => (
+              <div key={holiday.holiday_date.toString()} className="group">
+                <div className="rounded-none border border-gray-200 bg-white p-6 h-full transition-all duration-300 hover:border-black">
+                  <div className="text-4xl font-semibold text-gray-800 mb-4">
+                    {(index + 1).toString().padStart(2, '0')}
+                  </div>
+                  <h3 className="text-2xl font-medium mb-4">{holiday.holiday_name}</h3>
+                  <p className="text-gray-600 mb-2">
+                    {format(new Date(holiday.holiday_date), 'EEEE, dd MMMM yyyy', { locale: id })}
+                  </p>
+                  <p className="text-black font-normal">{holiday.daysUntil} hari lagi</p>
+                </div>
+              </div>
+            ))}
+          </section>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 py-6">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-6 text-3xl font-bold">What to expect</h2>
-            <p className="mb-12 text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
-              aliquam euismod eget a leo. Sed eget orci feugiat, porttitor nibh vel, faucibus
-              mauris.
-            </p>
-          </div>
-          <div className="-mx-4 mt-12 flex flex-wrap">
-            <div className="mb-8 w-full px-4 md:w-1/3">
-              <div className="rounded-md bg-white p-8 shadow-md">
-                <div className="mb-4 text-4xl font-bold text-purple-600">01</div>
-                <h3 className="mb-4 text-2xl font-bold">Feature 1</h3>
-                <p className="mb-4 text-gray-600">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
-                  aliquam euismod eget a leo.
-                </p>
-              </div>
-            </div>
-            <div className="mb-8 w-full px-4 md:w-1/3">
-              <div className="rounded-md bg-white p-8 shadow-md">
-                <div className="mb-4 text-4xl font-bold text-purple-600">02</div>
-                <h3 className="mb-4 text-2xl font-bold">Feature 2</h3>
-                <p className="mb-4 text-gray-600">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
-                  aliquam euismod eget a leo.
-                </p>
-              </div>
-            </div>
-
-            <div className="mb-8 w-full px-4 md:w-1/3">
-              <div className="rounded-md bg-white p-8 shadow-md">
-                <div className="mb-4 text-4xl font-bold text-purple-600">03</div>
-                <h3 className="mb-4 text-2xl font-bold">Feature 3</h3>
-                <p className="mb-4 text-gray-600">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec orci quis justo
-                  aliquam euismod eget a leo.
-                </p>
-              </div>
-            </div>
+          <div className="text-center">
+            <p className="text-gray-600">&copy; 2025 Kalender Libur Indonesia</p>
           </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
