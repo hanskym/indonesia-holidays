@@ -5,6 +5,9 @@ import { mono, sans } from '@/lib/fonts';
 
 import '@/styles/globals.css';
 
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -70,7 +73,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${mono.variable}`}>{children}</body>
+      <body className={`${sans.variable} ${mono.variable} flex min-h-screen flex-col font-sans`}>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
