@@ -1,4 +1,5 @@
-import { compareAsc, differenceInDays, isAfter, isToday } from 'date-fns';
+import { compareAsc, differenceInDays, format, isAfter, isToday } from 'date-fns';
+import { id } from 'date-fns/locale';
 
 import type { GetHolidayEntriesResponse, HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
@@ -20,4 +21,25 @@ export const getUpcomingHolidays = (
       daysUntil: differenceInDays(new Date(holiday.holiday_date), today),
     }))
     .slice(0, count);
+};
+
+export const groupHolidaysByMonth = (
+  holidays: GetHolidayEntriesResponse,
+  year: number,
+): { month: string; holidays: GetHolidayEntriesResponse }[] => {
+  const sortedHolidays = [...holidays].sort((a, b) =>
+    compareAsc(new Date(a.holiday_date), new Date(b.holiday_date)),
+  );
+
+  return Array.from({ length: 12 }, (_, index) => {
+    const monthHolidays = sortedHolidays.filter((holiday) => {
+      const holidayDate = new Date(holiday.holiday_date);
+      return holidayDate.getMonth() === index && holidayDate.getFullYear() === year;
+    });
+
+    return {
+      month: format(new Date(year, index), 'MMMM', { locale: id }),
+      holidays: monthHolidays,
+    };
+  });
 };
