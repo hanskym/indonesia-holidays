@@ -14,7 +14,10 @@ export interface UpcomingHoliday extends HolidayEntry {
   daysUntil: number;
 }
 
-export type GetHolidayEntriesResponse = Array<HolidayEntry>;
+export type GetHolidayEntriesResponse = {
+  data: HolidayEntry[];
+  lastFetch?: string;
+};
 
 export type GetHolidayEntriesParams = {
   month?: number;

@@ -1,3 +1,5 @@
+import { GetHolidayEntriesResponse } from '@/types/holiday';
+
 import TodayHoliday from '@/components/TodayHoliday';
 import UpcomingHolidays from '@/components/UpcomingHolidays';
 
@@ -7,14 +9,17 @@ import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 export default async function HomePage() {
   const currentYear = new Date().getFullYear();
 
-  const holidaysThisYear = await fetchHolidays(currentYear);
+  const holidaysThisYear: GetHolidayEntriesResponse = await fetchHolidays(currentYear);
 
   const upcomingHolidayCount = 4;
-  let allHolidays = holidaysThisYear;
+  let allHolidays = holidaysThisYear.data;
+  let lastFetch = holidaysThisYear.lastFetch;
 
-  if (holidaysThisYear.length < upcomingHolidayCount) {
-    const holidaysNextYear = await fetchHolidays(currentYear + 1);
-    allHolidays = [...holidaysThisYear, ...holidaysNextYear];
+  if (holidaysThisYear.data.length < upcomingHolidayCount) {
+    const holidaysNextYear: GetHolidayEntriesResponse = await fetchHolidays(currentYear + 1);
+    allHolidays = [...holidaysThisYear.data, ...holidaysNextYear.data];
+
+    lastFetch = holidaysNextYear.lastFetch || holidaysThisYear.lastFetch;
   }
 
   const upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount);
@@ -25,7 +30,11 @@ export default async function HomePage() {
   return (
     <div className="relative mx-auto flex w-full flex-col justify-center 2xl:max-w-7xl">
       <div className="container mx-auto max-w-6xl space-y-4 px-4">
-        <TodayHoliday todayHoliday={todayHoliday} nextHoliday={upcomingHolidays[0]} />
+        <TodayHoliday
+          todayHoliday={todayHoliday}
+          nextHoliday={upcomingHolidays[0]}
+          lastFetch={lastFetch}
+        />
 
         <UpcomingHolidays holidaysToShow={holidaysToShow} year={currentYear} />
       </div>

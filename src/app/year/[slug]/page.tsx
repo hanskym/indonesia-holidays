@@ -32,9 +32,9 @@ export default async function YearPage({ params }: { params: Promise<{ slug: str
           </Link>
         </div>
         {holidays ? (
-          <HolidayCalendar holidays={holidays} year={year} />
+          <HolidayCalendar holidays={holidays.data} year={year} />
         ) : (
-          <div className="flex min-h-[200px] w-full items-center justify-center">
+          <div className="flex min-h-[70dvh] w-full items-center justify-center">
             <div className="p-8 text-center">
               <h3 className="mb-2 text-xl font-semibold text-gray-900">No Holidays Found</h3>
               <p className="text-gray-600">There are no holidays available for the year {year}</p>

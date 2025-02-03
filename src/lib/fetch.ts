@@ -4,8 +4,11 @@ import { NEXT_BASE_URL } from '@/lib/constants';
 
 export const fetchHolidays = async (year: number): Promise<GetHolidayEntriesResponse> => {
   const response = await fetch(`${NEXT_BASE_URL}/api/holidays?year=${year}`, {
-    cache: 'no-store',
+    next: {
+      revalidate: 86400, // 24 hours
+      tags: ['holidays-data'],
+    },
   });
-  const { data } = await response.json();
-  return data;
+  const { data, lastFetch } = await response.json();
+  return { data, lastFetch };
 };

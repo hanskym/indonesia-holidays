@@ -1,14 +1,14 @@
 import { compareAsc, differenceInDays, format, isAfter, isToday } from 'date-fns';
 import { id } from 'date-fns/locale';
 
-import type { GetHolidayEntriesResponse, HolidayEntry, UpcomingHoliday } from '@/types/holiday';
+import type { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
-export const getTodayHoliday = (holidays: GetHolidayEntriesResponse): HolidayEntry | undefined => {
+export const getTodayHoliday = (holidays: HolidayEntry[]): HolidayEntry | undefined => {
   return holidays.find((item) => isToday(new Date(item.holidayDate)));
 };
 
 export const getUpcomingHolidays = (
-  holidays: GetHolidayEntriesResponse,
+  holidays: HolidayEntry[],
   count: number = 4,
 ): UpcomingHoliday[] => {
   const today = new Date();
@@ -24,9 +24,9 @@ export const getUpcomingHolidays = (
 };
 
 export const groupHolidaysByMonth = (
-  holidays: GetHolidayEntriesResponse,
+  holidays: HolidayEntry[],
   year: number,
-): { month: string; holidays: GetHolidayEntriesResponse }[] => {
+): { month: string; holidays: HolidayEntry[] }[] => {
   const sortedHolidays = [...holidays].sort((a, b) =>
     compareAsc(new Date(a.holidayDate), new Date(b.holidayDate)),
   );

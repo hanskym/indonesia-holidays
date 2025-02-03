@@ -19,7 +19,10 @@ export async function GET(request: Request) {
     }
 
     const response = await fetch(apiUrl, {
-      next: { revalidate: 3600 },
+      cache: 'no-store',
+      next: {
+        tags: ['source-data'],
+      },
     });
 
     if (!response.ok) {
@@ -39,6 +42,7 @@ export async function GET(request: Request) {
         message: 'Data fetched successfully',
         filter: { month: month ?? 'all', year },
         data,
+        lastFetch: new Date().toISOString(),
       },
       { status: 200 },
     );

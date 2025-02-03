@@ -3,14 +3,25 @@ import { id } from 'date-fns/locale';
 
 import { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
+import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
+
 interface TodayHolidayProps {
   todayHoliday?: HolidayEntry;
   nextHoliday: UpcomingHoliday;
+  lastFetch?: string;
 }
 
-export default function TodayHoliday({ todayHoliday, nextHoliday }: TodayHolidayProps) {
+export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: TodayHolidayProps) {
   return (
     <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-neutral-100 p-8">
+      <div className="absolute top-4 right-4 z-20">
+        {lastFetch && (
+          <div className="flex items-center gap-1 text-right text-xs text-gray-600">
+            <div>Data diperbarui: {format(new Date(lastFetch), 'dd MMM yyyy, HH:mm:ss')}</div>
+            <RevalidateHolidaysButton />
+          </div>
+        )}
+      </div>
       <div className="grid md:grid-cols-2">
         <div className="relative z-10 flex flex-col justify-between space-y-4 lg:space-y-6">
           <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border">
