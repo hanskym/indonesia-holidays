@@ -28,21 +28,26 @@ export default function UpcomingHolidays({
 
       <div className="relative z-10 mt-4 grid grid-cols-6 gap-3">
         {holidaysToShow.map((holiday, index) => (
-          <div key={holiday.holiday_date.toString()} className="group col-span-full md:col-span-2">
+          <div key={holiday.holidayDate.toString()} className="group col-span-full md:col-span-2">
             <Card>
               <CardContent className="flex-grow space-y-8 rounded-t-lg bg-[#fef4e2] p-6">
                 <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
                   <span className="font-mono text-4xl font-semibold text-gray-800">
                     {(index + 1).toString().padStart(2, '0')}
                   </span>
+                  {holiday.isLeave && (
+                    <span className="inline-flex items-center rounded-full bg-green-300 p-0.5 text-xs font-medium text-green-700">
+                      Cuti Bersama
+                    </span>
+                  )}
                 </CardTitle>
                 <CardDescription>
-                  <h3 className="text-3xl font-semibold">{holiday.holiday_name}</h3>
+                  <h3 className="text-3xl font-semibold">{holiday.holidayName}</h3>
                 </CardDescription>
               </CardContent>
               <CardFooter className="items-center justify-between gap-2">
                 <p className="flex items-center gap-3">
-                  {format(new Date(holiday.holiday_date), 'EEEE, dd MMMM yyyy', { locale: id })}
+                  {format(new Date(holiday.holidayDate), 'EEEE, dd MMMM yyyy', { locale: id })}
                 </p>
                 <p>{holiday.daysUntil} hari lagi</p>
               </CardFooter>

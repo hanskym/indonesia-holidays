@@ -1,7 +1,13 @@
+export type ApiHolidayEntry = {
+  tanggal: string;
+  keterangan: string;
+  is_cuti: boolean;
+};
+
 export type HolidayEntry = {
-  holiday_date: Date | string;
-  holiday_name: string;
-  is_national_holiday: boolean;
+  holidayDate: Date | string;
+  holidayName: string;
+  isLeave: boolean;
 };
 
 export interface UpcomingHoliday extends HolidayEntry {

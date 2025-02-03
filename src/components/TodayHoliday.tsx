@@ -36,14 +36,14 @@ export default function TodayHoliday({ todayHoliday, nextHoliday }: TodayHoliday
             {todayHoliday ? (
               <>
                 <h2 className="mb-6 text-3xl font-semibold">Hari Ini Libur!</h2>
-                <p className="text-xl text-gray-800">{todayHoliday.holiday_name}</p>
+                <p className="text-xl text-gray-800">{todayHoliday.holidayName}</p>
               </>
             ) : (
               <>
                 <h2 className="mb-6 text-3xl font-semibold">Kapan hari libur terdekat?</h2>
                 <p className="text-xl text-gray-800">
-                  {nextHoliday.holiday_name} -{' '}
-                  {format(new Date(nextHoliday.holiday_date), 'EEEE, dd MMMM yyyy', {
+                  {nextHoliday.holidayName} -{' '}
+                  {format(new Date(nextHoliday.holidayDate), 'EEEE, dd MMMM yyyy', {
                     locale: id,
                   })}
                   <br />

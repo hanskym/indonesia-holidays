@@ -34,22 +34,22 @@ export default function HolidayCalendar({
                   {data.holidays.length > 0 ? (
                     data.holidays.map((holiday) => (
                       <div
-                        key={`${holiday.holiday_date.toString()}-${holiday.holiday_name}`}
+                        key={`${holiday.holidayDate.toString()}-${holiday.holidayName}`}
                         className="flex flex-col gap-1"
                       >
                         <div className="flex items-center">
                           <span className="text-sm text-gray-600">
-                            {format(new Date(holiday.holiday_date), 'EEEE, dd MMMM yyyy', {
+                            {format(new Date(holiday.holidayDate), 'EEEE, dd MMMM yyyy', {
                               locale: id,
                             })}
                           </span>
-                          {holiday.is_national_holiday && (
+                          {holiday.isLeave && (
                             <span className="ml-1 inline-flex items-center rounded-full bg-green-300 p-0.5 text-xs font-medium text-green-700">
-                              Libur Nasional
+                              Cuti Bersama
                             </span>
                           )}
                         </div>
-                        <span className="font-medium">{holiday.holiday_name}</span>
+                        <span className="font-medium">{holiday.holidayName}</span>
                       </div>
                     ))
                   ) : (

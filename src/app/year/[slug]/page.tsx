@@ -31,7 +31,7 @@ export default async function YearPage({ params }: { params: Promise<{ slug: str
             <Button>{year + 1}</Button>
           </Link>
         </div>
-        {holidays.length > 0 ? (
+        {holidays ? (
           <HolidayCalendar holidays={holidays} year={year} />
         ) : (
           <div className="flex min-h-[200px] w-full items-center justify-center">

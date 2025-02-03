@@ -9,12 +9,12 @@ export default function Footer() {
           <p>
             Sumber data:{' '}
             <a
-              href="https://api-harilibur.vercel.app/"
+              href="https://dayoffapi.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="API Hari Libur"
+              aria-label="dayoff-API"
             >
-              API Hari Libur
+              dayoff-API
             </a>
           </p>
         </div>

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import type { HolidayEntry } from '@/types/holiday';
+import type { ApiHolidayEntry, HolidayEntry } from '@/types/holiday';
 
 import { API_BASE_URL } from '@/lib/constants';
 
@@ -26,7 +26,13 @@ export async function GET(request: Request) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data: HolidayEntry[] = await response.json();
+    const responseData: Promise<ApiHolidayEntry[]> = response.json();
+
+    const data: HolidayEntry[] = (await responseData).map(({ tanggal, keterangan, is_cuti }) => ({
+      holidayDate: tanggal,
+      holidayName: keterangan,
+      isLeave: is_cuti,
+    }));
 
     return NextResponse.json(
       {
