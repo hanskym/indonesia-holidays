@@ -53,7 +53,7 @@ export default function HolidayCalendar({
                       </div>
                     ))
                   ) : (
-                    <div className="text-gray-600">No holidays</div>
+                    <div className="text-gray-600">Tidak ada libur bulan ini 😔</div>
                   )}
                 </CardDescription>
               </CardContent>

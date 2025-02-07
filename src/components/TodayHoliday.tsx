@@ -49,17 +49,22 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
                 <h2 className="mb-6 text-3xl font-semibold">Hari Ini Libur!</h2>
                 <p className="text-xl text-gray-800">{todayHoliday.holidayName}</p>
               </>
-            ) : (
+            ) : nextHoliday ? (
               <>
                 <h2 className="mb-6 text-3xl font-semibold">Kapan hari libur terdekat?</h2>
                 <p className="text-xl text-gray-800">
                   {nextHoliday.holidayName} -{' '}
-                  {format(new Date(nextHoliday.holidayDate), 'EEEE, dd MMMM yyyy', {
-                    locale: id,
-                  })}
+                  {format(new Date(nextHoliday.holidayDate), 'EEEE, dd MMMM yyyy', { locale: id })}
                   <br />
                   <span className="text-base text-gray-600">{nextHoliday.daysUntil} hari lagi</span>
                 </p>
+              </>
+            ) : (
+              <>
+                <h2 className="mb-6 text-3xl font-semibold">
+                  Yah, tidak ada hari libur yang akan datang.
+                </h2>
+                <p className="text-xl text-gray-600">Silakan periksa kembali nanti.</p>
               </>
             )}
           </div>

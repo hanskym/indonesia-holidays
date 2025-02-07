@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import type { ApiHolidayEntry, HolidayEntry } from '@/types/holiday';
 
@@ -6,9 +6,9 @@ import { API_BASE_URL } from '@/lib/constants';
 
 export const runtime = 'edge';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const month = searchParams.get('month');
     const year = searchParams.get('year') ?? new Date().getFullYear().toString();
 
@@ -18,23 +18,30 @@ export async function GET(request: Request) {
       if (month) apiUrl += `&month=${month}`;
     }
 
-    const response = await fetch(apiUrl, {
-      cache: 'no-store',
-      next: {
-        tags: ['source-data'],
-      },
-    });
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.status === 404) {
+        return NextResponse.json(
+          {
+            message: 'No holidays found for the specified month/year.',
+            filter: { month: month ?? 'all', year },
+            data: [],
+            lastFetch: new Date().toISOString(),
+          },
+          { status: 404 },
+        );
+      }
+
+      throw new Error(`Unexpected response from external data provider`);
     }
 
-    const responseData: Promise<ApiHolidayEntry[]> = response.json();
+    const responseData: ApiHolidayEntry[] = await response.json();
 
-    const data: HolidayEntry[] = (await responseData).map(({ tanggal, keterangan, is_cuti }) => ({
-      holidayDate: tanggal,
-      holidayName: keterangan,
-      isLeave: is_cuti,
+    const data: HolidayEntry[] = responseData.map((holiday: ApiHolidayEntry) => ({
+      holidayDate: holiday.tanggal,
+      holidayName: holiday.keterangan,
+      isLeave: holiday.is_cuti,
     }));
 
     return NextResponse.json(

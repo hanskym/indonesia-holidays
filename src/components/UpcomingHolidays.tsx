@@ -27,9 +27,23 @@ export default function UpcomingHolidays({
       </div>
 
       <div className="relative z-10 mt-4 grid grid-cols-6 gap-3">
-        {holidaysToShow.map((holiday, index) => (
-          <div key={holiday.holidayDate.toString()} className="group col-span-full md:col-span-2">
-            <Card>
+        {holidaysToShow.length === 0 ? (
+          <Card className="group col-span-full">
+            <CardContent className="flex-grow space-y-8 rounded-t-lg bg-[#fef4e2] p-6">
+              <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
+                Data Tidak Tersedia
+              </CardTitle>
+              <CardDescription>
+                Informasi mengenai hari libur selanjutnya belum tersedia.
+              </CardDescription>
+            </CardContent>
+          </Card>
+        ) : (
+          holidaysToShow.map((holiday, index) => (
+            <Card
+              key={holiday.holidayDate.toString()}
+              className="group col-span-full md:col-span-2"
+            >
               <CardContent className="flex-grow space-y-8 rounded-t-lg bg-[#fef4e2] p-6">
                 <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
                   <span className="font-mono text-4xl font-semibold text-gray-800">
@@ -52,8 +66,8 @@ export default function UpcomingHolidays({
                 <p>{holiday.daysUntil} hari lagi</p>
               </CardFooter>
             </Card>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

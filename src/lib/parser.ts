@@ -10,15 +10,14 @@ export const getTodayHoliday = (holidays: HolidayEntry[]): HolidayEntry | undefi
 export const getUpcomingHolidays = (
   holidays: HolidayEntry[],
   count: number = 4,
+  comparisonDate: Date = new Date(),
 ): UpcomingHoliday[] => {
-  const today = new Date();
-
   return holidays
     .sort((a, b) => compareAsc(new Date(a.holidayDate), new Date(b.holidayDate)))
-    .filter((item) => isAfter(new Date(item.holidayDate), today) && item.isLeave)
+    .filter((item) => isAfter(new Date(item.holidayDate), comparisonDate))
     .map((holiday) => ({
       ...holiday,
-      daysUntil: differenceInDays(new Date(holiday.holidayDate), today),
+      daysUntil: differenceInDays(new Date(holiday.holidayDate), comparisonDate),
     }))
     .slice(0, count);
 };

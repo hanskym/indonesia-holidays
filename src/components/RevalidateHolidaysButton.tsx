@@ -6,23 +6,20 @@ import { Button } from '@/components/ui/Button';
 
 import { revalidateTag } from '@/lib/revalidate';
 
-export function RevalidateHolidaysButton() {
-  const [isRevalidating, setIsRevalidating] = useState(false);
-  const [revalidationStatus, setRevalidationStatus] = useState<'idle' | 'success' | 'error'>(
-    'idle',
-  );
+type RevalidationStatus = 'idle' | 'success' | 'error';
 
-  const handleRevalidate = async () => {
+export function RevalidateHolidaysButton() {
+  const [isRevalidating, setIsRevalidating] = useState<boolean>(false);
+  const [revalidationStatus, setRevalidationStatus] = useState<RevalidationStatus>('idle');
+
+  const handleRevalidate = async (): Promise<void> => {
     setIsRevalidating(true);
     setRevalidationStatus('idle');
 
     try {
-      const [holidaysResult, sourceResult] = await Promise.all([
-        revalidateTag('source-data'),
-        revalidateTag('holidays-data'),
-      ]);
+      const holidaysResult = await revalidateTag('holidays-data');
 
-      if (holidaysResult && sourceResult) {
+      if (holidaysResult) {
         setRevalidationStatus('success');
       } else {
         setRevalidationStatus('error');

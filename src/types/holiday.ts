@@ -15,6 +15,7 @@ export interface UpcomingHoliday extends HolidayEntry {
 }
 
 export type GetHolidayEntriesResponse = {
+  message: string;
   data: HolidayEntry[];
   lastFetch?: string;
 };
