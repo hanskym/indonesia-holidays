@@ -43,7 +43,7 @@ export const metadata: Metadata = {
         width: 1200,
       },
     ],
-    locale: 'en_US',
+    locale: 'id_ID',
     siteName: siteConfig.name,
     title: siteConfig.name,
     type: 'website',
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
   },
   icons: {
     apple: '/apple-icon.png',
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
+    icon: '/icon.svg',
+    shortcut: '/favicon.ico',
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
 };

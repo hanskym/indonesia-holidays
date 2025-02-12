@@ -1,10 +1,17 @@
+import type { Metadata } from 'next';
+
 import { GetHolidayEntriesResponse } from '@/types/holiday';
 
 import TodayHoliday from '@/components/TodayHoliday';
 import UpcomingHolidays from '@/components/UpcomingHolidays';
 
+import { siteConfig } from '@/config/site';
 import { fetchHolidays } from '@/lib/fetch';
 import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
+
+export const metadata: Metadata = {
+  title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
+};
 
 export default async function HomePage() {
   const currentDate = new Date();

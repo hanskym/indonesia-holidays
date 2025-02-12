@@ -1,20 +1,21 @@
 export const siteConfig = {
-  name: 'Next.js Starter',
-  url: 'https://nextjs-starter.hansky.dev',
+  name: 'Libur',
+  url: 'https://libur.hansky.dev',
   aboutMe: {
-    altName: 'JDoe',
-    fullName: 'John Doe',
-    shortName: 'John',
+    altName: 'Hansky Mulya',
+    fullName: 'Farhan Rinsky Mulya',
+    shortName: 'Farhan',
     socials: {
-      email: 'email@acme.com',
-      github: 'https://github.com/username',
-      gravatar: 'https://gravatar.com/username',
-      twitter: 'https://x.com/username',
-      twitterUsername: '@username',
+      email: 'hi@hansky.dev',
+      github: 'https://github.com/hanskym',
+      gravatar: 'https://gravatar.com/hanskym',
+      twitter: 'https://x.com/hansky_m',
+      twitterUsername: '@hansky_m',
     },
   },
-  description: 'A starter template for building Next.js.',
-  keywords: ['Next.js', 'Starter Template', 'Next.js App Router'],
+  description:
+    'Periksa hari libur hari ini atau yang akan datang, serta akses kalender lengkap hari libur nasional dan cuti bersama di Indonesia.',
+  keywords: ['Hari Libur Indonesia', 'Cuti Bersama', 'Kalender Indonesia', 'Libur Nasional'],
   ogImage: '/og-image.png',
 };
 
