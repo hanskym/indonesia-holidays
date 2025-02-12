@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-import { id } from 'date-fns/locale';
 import { Link } from 'next-view-transitions';
 
 import { UpcomingHoliday } from '@/types/holiday';
@@ -7,6 +5,8 @@ import { UpcomingHoliday } from '@/types/holiday';
 import { Badge } from '@/components/ui/Badge';
 import { buttonVariants } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/components/ui/Card';
+
+import { formatDate } from '@/lib/format';
 
 interface UpcomingHolidaysProps {
   holidaysToShow: UpcomingHoliday[];
@@ -62,7 +62,7 @@ export default function UpcomingHolidays({
               </CardContent>
               <CardFooter className="items-center justify-between gap-2">
                 <p className="flex items-center gap-3">
-                  {format(new Date(holiday.holidayDate), 'EEEE, dd MMMM yyyy', { locale: id })}
+                  {formatDate(holiday.holidayDate, 'EEEE, dd MMMM yyyy')}
                 </p>
                 <p>{holiday.daysUntil} hari lagi</p>
               </CardFooter>

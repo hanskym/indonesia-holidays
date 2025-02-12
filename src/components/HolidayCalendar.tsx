@@ -1,11 +1,9 @@
-import { format } from 'date-fns';
-import { id } from 'date-fns/locale';
-
 import { HolidayEntry } from '@/types/holiday';
 
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/components/ui/Card';
 
+import { formatDate } from '@/lib/format';
 import { groupHolidaysByMonth } from '@/lib/parser';
 
 interface HolidayCalendarProps {
@@ -40,9 +38,7 @@ export default function HolidayCalendar({
                       >
                         <div className="flex items-center gap-1">
                           <span className="text-sm text-text-muted">
-                            {format(new Date(holiday.holidayDate), 'EEEE, dd MMMM yyyy', {
-                              locale: id,
-                            })}
+                            {formatDate(holiday.holidayDate, 'EEEE, dd MMMM yyyy')}
                           </span>
 
                           {holiday.isLeave && (

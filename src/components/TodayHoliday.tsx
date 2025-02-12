@@ -1,11 +1,10 @@
-import { format } from 'date-fns';
-import { id } from 'date-fns/locale';
-
 import { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
 import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
 import { Badge } from '@/components/ui/Badge';
 import { Icons } from '@/components/ui/Icons';
+
+import { formatDate } from '@/lib/format';
 
 interface TodayHolidayProps {
   todayHoliday?: HolidayEntry;
@@ -21,7 +20,7 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
           <div className="flex items-center gap-2 text-right text-xs text-text-muted">
             <div className="flex flex-col gap-x-1 md:flex-row">
               <p>Data diperbarui pada</p>
-              <p>{format(new Date(lastFetch), 'dd MMM yyyy, HH:mm:ss')}</p>
+              <p>{formatDate(lastFetch, 'dd MMM yyyy, HH:mm:ss')}</p>
             </div>
 
             <RevalidateHolidaysButton />
@@ -36,9 +35,7 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
 
           <div className="space-y-4">
             <Badge className="p-1">
-              <h1 className="text-sm">
-                Hari ini: {format(new Date(), 'EEEE, dd MMMM yyyy', { locale: id })}
-              </h1>
+              <h1 className="text-sm">Hari ini: {formatDate(new Date(), 'EEEE, dd MMMM yyyy')}</h1>
             </Badge>
 
             {todayHoliday ? (
@@ -51,7 +48,7 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
                 <h2 className="mb-6 text-3xl font-bold">Kapan hari libur terdekat?</h2>
                 <p className="text-xl font-medium">
                   {nextHoliday.holidayName} -{' '}
-                  {format(new Date(nextHoliday.holidayDate), 'EEEE, dd MMMM yyyy', { locale: id })}
+                  {formatDate(nextHoliday.holidayDate, 'EEEE, dd MMMM yyyy')}
                 </p>
                 <p className="mt-4 text-base text-text-muted">
                   {nextHoliday.daysUntil === 1
