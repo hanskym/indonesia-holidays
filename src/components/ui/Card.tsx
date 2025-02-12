@@ -7,7 +7,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     <div
       ref={ref}
       className={cn(
-        'flex size-full flex-col rounded-2xl border border-gray-200 bg-[#fefefe] p-2 text-[#141414] transition-all duration-300 hover:border-black',
+        'flex size-full flex-col rounded-2xl border-2 border-border bg-surface p-2 text-text transition-all duration-300 hover:border-2 hover:border-black',
         className,
       )}
       {...props}
@@ -21,7 +21,7 @@ const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   ...props
 }) => (
-  <div className={cn('flex-grow space-y-8 rounded-t-lg bg-[#fef4e2] p-6', className)} {...props}>
+  <div className={cn('flex-grow space-y-8 rounded-t-lg bg-card-content p-6', className)} {...props}>
     {children}
   </div>
 );

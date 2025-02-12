@@ -3,6 +3,7 @@ import { id } from 'date-fns/locale';
 
 import { HolidayEntry } from '@/types/holiday';
 
+import { Badge } from '@/components/ui/Badge';
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/components/ui/Card';
 
 import { groupHolidaysByMonth } from '@/lib/parser';
@@ -24,9 +25,9 @@ export default function HolidayCalendar({
         {holidaysByMonth.map((data, index) => (
           <div key={`${year}-${index}`} className="group col-span-1">
             <Card>
-              <CardContent className="flex-grow space-y-8 rounded-t-lg bg-[#fef4e2] p-6">
+              <CardContent className="flex-grow space-y-8 rounded-t-lg p-6">
                 <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
-                  <span className="font-mono text-4xl font-semibold text-gray-800">
+                  <span className="text-4xl font-semibold">
                     {(index + 1).toString().padStart(2, '0')}
                   </span>
                 </CardTitle>
@@ -37,23 +38,25 @@ export default function HolidayCalendar({
                         key={`${holiday.holidayDate.toString()}-${holiday.holidayName}`}
                         className="flex flex-col gap-1"
                       >
-                        <div className="flex items-center">
-                          <span className="text-sm text-gray-600">
+                        <div className="flex items-center gap-1">
+                          <span className="text-sm text-text-muted">
                             {format(new Date(holiday.holidayDate), 'EEEE, dd MMMM yyyy', {
                               locale: id,
                             })}
                           </span>
+
                           {holiday.isLeave && (
-                            <span className="ml-1 inline-flex items-center rounded-full bg-green-300 p-0.5 text-xs font-medium text-green-700">
+                            <Badge className="p-1 text-xs" variant="success">
                               Cuti Bersama
-                            </span>
+                            </Badge>
                           )}
                         </div>
+
                         <span className="font-medium">{holiday.holidayName}</span>
                       </div>
                     ))
                   ) : (
-                    <div className="text-gray-600">Tidak ada libur bulan ini 😔</div>
+                    <div className="text-text-muted">Tidak ada libur pada bulan ini 😔</div>
                   )}
                 </CardDescription>
               </CardContent>

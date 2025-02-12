@@ -1,14 +1,106 @@
 @import 'tailwindcss';
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--ui-font-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: var(--ui-font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --color-background: hsl(var(--background));
+  --color-text: hsl(var(--text));
+  --color-text-muted: hsl(var(--text-muted));
+
+  --color-main: hsl(var(--main));
+  --color-success: hsl(var(--success));
+  --color-error: hsl(var(--error));
+
+  --color-card: hsl(var(--card));
+  --color-card-content: hsl(var(--card-content));
+  --color-surface: hsl(var(--surface));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-loading: loading 1s linear infinite;
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
 
-.loading {
-  animation: rotate 1s linear infinite;
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --text: 0 0% 3.9%;
+    --text-muted: 0 0% 45.1%;
+
+    --main: 0 0% 23%;
+    --success: 142.31 100% 33%;
+    --error: 357.18 100% 45%;
+
+    --card: 0 0% 96.08%;
+    --surface: 0 0% 99.61%;
+    --card-content: 39 93% 94%;
+
+    --border: 0 0% 83.92%;
+    --input: 0 0% 83.92%;
+    --ring: 0 0% 3.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 10%;
+    --text: 0 0% 98%;
+    --text-muted: 0 0% 63.9%;
+
+    --card: 0 0% 14.9%;
+    --surface: 0 0% 21%;
+    --card-content: 30 4% 9%;
+
+    --border: 0 0% 23.53%;
+    --input: 0 0% 23.53%;
+    --ring: 0 0% 83.1%;
+  }
+
+  body {
+    @apply bg-background text-text;
+  }
+
+  * {
+    @apply border-border;
+    scroll-behavior: smooth;
+    scrollbar-color: hsl(var(--main)) transparent;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--main));
+    border-radius: var(--radius);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::selection {
+    background: hsl(var(--border));
+  }
 }

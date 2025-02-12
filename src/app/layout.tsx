@@ -1,12 +1,17 @@
 import type { Metadata, Viewport } from 'next';
 
+import { ViewTransitions } from 'next-view-transitions';
+
 import { siteConfig } from '@/config/site';
-import { mono, sans } from '@/lib/fonts';
+import { uiFontMono, uiFontSans } from '@/lib/fonts';
 
 import '@/styles/globals.css';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import { ThemeProvider } from '@/components/ThemeProvider';
+
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: {
@@ -72,12 +77,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${sans.variable} ${mono.variable} flex min-h-screen flex-col font-sans`}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en"
+        className={cn(uiFontSans.variable, uiFontMono.variable)}
+        suppressHydrationWarning
+      >
+        <body className="flex min-h-screen flex-col font-sans">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
