@@ -11,7 +11,7 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="container mx-auto flex min-h-[75dvh] flex-col items-center justify-center px-4">
+    <div className="container mx-auto flex min-h-[80dvh] flex-col items-center justify-center px-4">
       <div className="space-y-8 text-center">
         <div>
           <h2 className="text-xl font-semibold">

@@ -35,9 +35,9 @@ export function RevalidateHolidaysButton() {
 
   return (
     <Button
+      className="size-fit rounded-full p-1"
       onClick={handleRevalidate}
       disabled={isRevalidating}
-      className="size-fit rounded-full p-1"
       variant={
         revalidationStatus === 'success'
           ? 'success'
@@ -45,6 +45,7 @@ export function RevalidateHolidaysButton() {
             ? 'error'
             : 'default'
       }
+      aria-label="Muat Ulang Data"
     >
       {revalidationStatus === 'success' ? (
         <Icons.success />

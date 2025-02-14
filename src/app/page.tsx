@@ -9,6 +9,8 @@ import { siteConfig } from '@/config/site';
 import { fetchHolidays } from '@/lib/fetch';
 import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
 };

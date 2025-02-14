@@ -44,7 +44,7 @@
   :root {
     --background: 0 0% 98%;
     --text: 0 0% 3.9%;
-    --text-muted: 0 0% 45.1%;
+    --text-muted: 0 0% 30%;
 
     --main: 0 0% 23%;
     --success: 142.31 100% 33%;
@@ -64,7 +64,7 @@
   .dark {
     --background: 0 0% 10%;
     --text: 0 0% 98%;
-    --text-muted: 0 0% 63.9%;
+    --text-muted: 0 0% 72%;
 
     --card: 0 0% 14.9%;
     --surface: 0 0% 21%;
@@ -82,7 +82,7 @@
   * {
     @apply border-border;
     scroll-behavior: smooth;
-    scrollbar-color: hsl(var(--main)) transparent;
+    scrollbar-color: hsl(var(--border)) transparent;
     scrollbar-width: thin;
   }
 
@@ -92,15 +92,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--main));
+    background: hsl(var(--border));
     border-radius: var(--radius);
   }
 
   ::-webkit-scrollbar-track {
     background: transparent;
-  }
-
-  ::selection {
-    background: hsl(var(--border));
   }
 }

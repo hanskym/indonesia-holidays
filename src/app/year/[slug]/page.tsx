@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-
-import { Link } from 'next-view-transitions';
 
 import type { GetHolidayEntriesResponse } from '@/types/holiday';
 
@@ -9,6 +8,8 @@ import HolidayCalendar from '@/components/HolidayCalendar';
 import { buttonVariants } from '@/components/ui/Button';
 
 import { fetchHolidays } from '@/lib/fetch';
+
+export const runtime = 'edge';
 
 type Props = {
   params: Promise<{ slug: string }>;

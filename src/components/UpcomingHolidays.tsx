@@ -1,4 +1,4 @@
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 
 import { UpcomingHoliday } from '@/types/holiday';
 
@@ -29,7 +29,7 @@ export default function UpcomingHolidays({
       <div className="relative z-10 mt-4 grid grid-cols-6 gap-3">
         {holidaysToShow.length === 0 ? (
           <Card className="group col-span-full">
-            <CardContent className="flex-grow space-y-8 rounded-t-lg p-6">
+            <CardContent className="flex-grow space-y-8 rounded-lg p-6">
               <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
                 Data Tidak Tersedia
               </CardTitle>
