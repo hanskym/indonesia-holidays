@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+
+import { Link } from 'next-view-transitions';
 
 import type { GetHolidayEntriesResponse } from '@/types/holiday';
 

@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
+import { ViewTransitions } from 'next-view-transitions';
+
 import { siteConfig } from '@/config/site';
 import { uiFontMono, uiFontSans } from '@/lib/fonts';
 
@@ -75,23 +77,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={cn(uiFontSans.variable, uiFontMono.variable)}
-      suppressHydrationWarning
-    >
-      <body className="flex min-h-screen flex-col font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en"
+        className={cn(uiFontSans.variable, uiFontMono.variable)}
+        suppressHydrationWarning
+      >
+        <body className="flex min-h-screen flex-col font-sans">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
