@@ -1,5 +1,6 @@
 import { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
+import ImageDisplay from '@/components/ImageDisplay';
 // import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
 import { Badge } from '@/components/ui/Badge';
 import { Icons } from '@/components/ui/Icons';
@@ -75,12 +76,8 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
             <span className="block size-2 rounded-full bg-border"></span>
           </div>
 
-          <div className="mt-2">
-            {todayHoliday ? (
-              <span className="size-12">🏖️</span>
-            ) : (
-              <span className="size-12">⏳</span>
-            )}
+          <div className="mt-2 max-h-48">
+            <ImageDisplay todayHoliday={todayHoliday} />
           </div>
         </div>
       </div>
