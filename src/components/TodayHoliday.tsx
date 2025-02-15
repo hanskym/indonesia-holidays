@@ -1,6 +1,6 @@
 import { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
-import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
+// import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
 import { Badge } from '@/components/ui/Badge';
 import { Icons } from '@/components/ui/Icons';
 
@@ -23,7 +23,7 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
               <p>{formatDate(lastFetch, 'dd MMM yyyy, HH:mm:ss')}</p>
             </div>
 
-            <RevalidateHolidaysButton />
+            {/* <RevalidateHolidaysButton /> */}
           </div>
         )}
       </div>
