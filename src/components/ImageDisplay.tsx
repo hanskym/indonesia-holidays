@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 
 import { HolidayEntry } from '@/types/holiday';
 
@@ -27,14 +27,14 @@ export default function ImageDisplay({ todayHoliday }: ImageDisplayProps) {
 
   return (
     <div className="relative aspect-video">
-      <img
+      <Image
+        className="size-full rounded-lg object-fill"
         src={imageSrc}
         alt={todayHoliday ? 'Holiday image' : 'Waiting image'}
         width="420"
         height="235"
-        loading="lazy"
-        decoding="async"
-        className="size-full rounded-lg object-fill"
+        priority
+        unoptimized
       />
     </div>
   );

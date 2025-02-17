@@ -25,7 +25,7 @@ export default async function HomePage() {
   let allHolidays = holidaysThisYear.data;
   let lastFetch = holidaysThisYear.lastFetch;
 
-  const todayHoliday = getTodayHoliday(allHolidays);
+  const todayHoliday = getTodayHoliday(allHolidays, currentDate);
   let upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
 
   if (upcomingHolidays.length < upcomingHolidayCount) {
@@ -48,6 +48,7 @@ export default async function HomePage() {
     <div className="relative mx-auto flex w-full flex-col justify-center">
       <div className="container mx-auto max-w-6xl space-y-4 px-4">
         <TodayHoliday
+          currentDate={currentDate}
           todayHoliday={todayHoliday}
           nextHoliday={upcomingHolidays[0]}
           lastFetch={lastFetch}

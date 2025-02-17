@@ -8,12 +8,18 @@ import { Icons } from '@/components/ui/Icons';
 import { formatDate } from '@/lib/format';
 
 interface TodayHolidayProps {
+  currentDate: Date;
   todayHoliday?: HolidayEntry;
   nextHoliday: UpcomingHoliday;
   lastFetch?: string;
 }
 
-export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: TodayHolidayProps) {
+export default function TodayHoliday({
+  currentDate = new Date(),
+  todayHoliday,
+  nextHoliday,
+  lastFetch,
+}: TodayHolidayProps) {
   return (
     <div className="relative overflow-hidden rounded-xl border border-border bg-card p-8">
       <div className="absolute top-4 right-4 z-20">
@@ -36,7 +42,7 @@ export default function TodayHoliday({ todayHoliday, nextHoliday, lastFetch }: T
 
           <div className="space-y-4">
             <Badge className="p-1">
-              <h1 className="text-sm">Hari ini: {formatDate(new Date(), 'EEEE, dd MMMM yyyy')}</h1>
+              <h1 className="text-sm">Hari ini: {formatDate(currentDate, 'EEEE, dd MMMM yyyy')}</h1>
             </Badge>
 
             {todayHoliday ? (

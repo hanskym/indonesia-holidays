@@ -1,11 +1,15 @@
-import { formatInTimeZone } from 'date-fns-tz';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import { id } from 'date-fns/locale';
+
+const TIME_ZONE = 'Asia/Jakarta';
 
 export const formatDate = (
   date: Date | string,
   dateFormat: string = 'EEEE, dd MMMM yyyy',
 ): string => {
-  const timeZone = 'Asia/Jakarta';
+  return formatInTimeZone(new Date(date), TIME_ZONE, dateFormat, { locale: id });
+};
 
-  return formatInTimeZone(new Date(date), timeZone, dateFormat, { locale: id });
+export const convertToIndonesianTime = (utcDate: Date): Date => {
+  return toZonedTime(utcDate, TIME_ZONE);
 };
