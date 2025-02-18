@@ -3,8 +3,6 @@ import { notFound, redirect } from 'next/navigation';
 
 import { Link } from 'next-view-transitions';
 
-import type { GetHolidayEntriesResponse } from '@/types/holiday';
-
 import HolidayCalendar from '@/components/HolidayCalendar';
 import { buttonVariants } from '@/components/ui/Button';
 
@@ -41,7 +39,7 @@ export default async function YearPage({ params }: Props) {
     redirect(`/year/${currentYear}`);
   }
 
-  const holidays: GetHolidayEntriesResponse = await fetchHolidays(year);
+  const holidays = await fetchHolidays(year);
 
   if (holidays.data.length === 0) {
     notFound();

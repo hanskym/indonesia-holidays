@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 
-import { GetHolidayEntriesResponse } from '@/types/holiday';
-
 import TodayHoliday from '@/components/TodayHoliday';
 import UpcomingHolidays from '@/components/UpcomingHolidays';
 
@@ -19,27 +17,18 @@ export default async function HomePage() {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
-  const holidaysThisYear: GetHolidayEntriesResponse = await fetchHolidays(currentYear);
-
+  let { data: allHolidays, lastFetch } = await fetchHolidays(currentYear);
   const upcomingHolidayCount = 4;
-  let allHolidays = holidaysThisYear.data;
-  let lastFetch = holidaysThisYear.lastFetch;
 
   const todayHoliday = getTodayHoliday(allHolidays, currentDate);
   let upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
 
   if (upcomingHolidays.length < upcomingHolidayCount) {
-    const holidaysNextYear: GetHolidayEntriesResponse = await fetchHolidays(currentYear + 1);
+    const nextYearHolidays = await fetchHolidays(currentYear + 1);
 
-    allHolidays = [...holidaysThisYear.data, ...holidaysNextYear.data];
-    const combinedUpcomingHolidays = getUpcomingHolidays(
-      allHolidays,
-      upcomingHolidayCount,
-      currentDate,
-    );
-
-    lastFetch = holidaysNextYear.lastFetch || holidaysThisYear.lastFetch;
-    upcomingHolidays = combinedUpcomingHolidays;
+    allHolidays = [...allHolidays, ...nextYearHolidays.data];
+    upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
+    lastFetch = nextYearHolidays.lastFetch || lastFetch;
   }
 
   const holidaysToShow = todayHoliday ? upcomingHolidays.slice(0, 3) : upcomingHolidays.slice(1, 4);

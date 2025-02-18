@@ -1,4 +1,4 @@
-import { compareAsc, differenceInDays, isAfter, isSameDay } from 'date-fns';
+import { compareAsc, differenceInDays, isSameDay } from 'date-fns';
 
 import type { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
 
@@ -8,11 +8,14 @@ export const getTodayHoliday = (
   holidays: HolidayEntry[],
   currentDate: Date = new Date(),
 ): HolidayEntry | undefined => {
-  const todayDate = convertToIndonesianTime(currentDate);
+  const today = convertToIndonesianTime(currentDate);
+  today.setHours(0, 0, 0, 0);
 
   return holidays.find((item) => {
     const holidayDate = convertToIndonesianTime(new Date(item.holidayDate));
-    return isSameDay(todayDate, holidayDate);
+    holidayDate.setHours(0, 0, 0, 0);
+
+    return isSameDay(today, holidayDate);
   });
 };
 
@@ -25,18 +28,17 @@ export const getUpcomingHolidays = (
   startOfDayComparison.setHours(0, 0, 0, 0);
 
   return holidays
-    .reduce<UpcomingHoliday[]>((acc, holiday) => {
+    .map((holiday) => {
       const holidayDate = convertToIndonesianTime(new Date(holiday.holidayDate));
+      holidayDate.setHours(0, 0, 0, 0);
 
-      if (isAfter(holidayDate, startOfDayComparison)) {
-        acc.push({
-          ...holiday,
-          daysUntil: differenceInDays(holidayDate, startOfDayComparison),
-        });
-      }
-      return acc;
-    }, [])
-    .sort((a, b) => compareAsc(new Date(a.holidayDate), new Date(b.holidayDate)))
+      return {
+        ...holiday,
+        daysUntil: differenceInDays(holidayDate, startOfDayComparison),
+      };
+    })
+    .filter((holiday) => holiday.daysUntil > 0)
+    .sort((a, b) => a.daysUntil - b.daysUntil)
     .slice(0, count);
 };
 
