@@ -46,20 +46,18 @@ export default async function YearPage({ params }: Props) {
   }
 
   return (
-    <div className="relative mx-auto flex w-full flex-col justify-center">
-      <div className="container mx-auto max-w-6xl space-y-4 px-4">
-        <div className="flex items-center justify-between gap-2 text-sm font-medium">
-          <Link className={buttonVariants()} href={`/year/${year - 1}`}>
-            {year - 1}
-          </Link>
-          <h1 className="text-xl font-bold md:text-3xl">{year}</h1>
-          <Link className={buttonVariants()} href={`/year/${year + 1}`}>
-            {year + 1}
-          </Link>
-        </div>
-
-        <HolidayCalendar holidays={holidays.data} year={year} />
+    <div className="flex flex-col justify-center space-y-4">
+      <div className="flex items-center justify-between gap-2 text-sm font-medium">
+        <Link className={buttonVariants()} href={`/year/${year - 1}`}>
+          {year - 1}
+        </Link>
+        <h1 className="text-xl font-bold md:text-3xl">{year}</h1>
+        <Link className={buttonVariants()} href={`/year/${year + 1}`}>
+          {year + 1}
+        </Link>
       </div>
+
+      <HolidayCalendar holidays={holidays.data} year={year} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ export default function NotFound() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="container mx-auto flex min-h-[80dvh] flex-col items-center justify-center px-4">
+    <div className="flex min-h-[80dvh] flex-col items-center justify-center space-y-8">
       <div className="text-center">
         <h2 className="text-xl font-semibold">Data Tidak Tersedia</h2>
         <p className="mt-4">

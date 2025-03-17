@@ -34,17 +34,15 @@ export default async function HomePage() {
   const holidaysToShow = todayHoliday ? upcomingHolidays.slice(0, 3) : upcomingHolidays.slice(1, 4);
 
   return (
-    <div className="relative mx-auto flex w-full flex-col justify-center">
-      <div className="container mx-auto max-w-6xl space-y-4 px-4">
-        <TodayHoliday
-          currentDate={currentDate}
-          todayHoliday={todayHoliday}
-          nextHoliday={upcomingHolidays[0]}
-          lastFetch={lastFetch}
-        />
+    <div className="flex flex-col justify-center space-y-4">
+      <TodayHoliday
+        currentDate={currentDate}
+        todayHoliday={todayHoliday}
+        nextHoliday={upcomingHolidays[0]}
+        lastFetch={lastFetch}
+      />
 
-        <UpcomingHolidays holidaysToShow={holidaysToShow} year={currentYear} />
-      </div>
+      <UpcomingHolidays holidaysToShow={holidaysToShow} year={currentYear} />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { uiFontMono, uiFontSans } from '@/lib/fonts';
 
 import '@/styles/globals.css';
 
+import Container from '@/components/Container';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -90,9 +91,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            <main>{children}</main>
-            <Footer />
+            <Container>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </Container>
           </ThemeProvider>
         </body>
       </html>
