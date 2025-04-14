@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Libur',
-  url: 'https://libur.hansky.dev',
+  url: 'https://libur-hsky.pages.dev',
   aboutMe: {
     altName: 'Hansky Mulya',
     fullName: 'Farhan Rinsky Mulya',
