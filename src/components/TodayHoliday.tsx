@@ -34,7 +34,7 @@ export default function TodayHoliday({
           </div>
         )}
       </div>
-      <div className="grid md:grid-cols-2">
+      <div className="mt-4 grid md:grid-cols-2">
         <div className="relative z-10 flex flex-col justify-between space-y-6">
           <div className="relative flex aspect-square size-12 rounded-full border border-border before:absolute before:-inset-2 before:rounded-full before:border before:border-border">
             <Icons.calendar className="m-auto size-6" />

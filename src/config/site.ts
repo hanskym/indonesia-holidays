@@ -17,6 +17,7 @@ export const siteConfig = {
     'Periksa hari libur hari ini atau yang akan datang, serta akses kalender lengkap hari libur nasional dan cuti bersama di Indonesia.',
   keywords: ['Hari Libur Indonesia', 'Cuti Bersama', 'Kalender Indonesia', 'Libur Nasional'],
   ogImage: '/og-image.png',
+  githubUrl: 'https://github.com/hanskym/indonesia-holidays',
 };
 
 export type SiteConfig = typeof siteConfig;
