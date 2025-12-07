@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: 'Libur',
+  name: 'Hari Libur Indonesia',
   url: 'https://libur-hsky.pages.dev',
   aboutMe: {
     altName: 'Hansky Mulya',
