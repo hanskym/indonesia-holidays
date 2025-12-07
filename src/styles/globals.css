@@ -3,10 +3,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--ui-font-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+  --font-sans:
+    var(--ui-font-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono: var(--ui-font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --font-mono:
+    var(--ui-font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 
   --color-background: hsl(var(--background));
   --color-text: hsl(var(--text));
