@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import type { ApiHolidayEntry, HolidayEntry } from '@/types/holiday';
+import type { ApiHolidayEntry, GetHolidayEntriesResponse, HolidayEntry } from '@/types/holiday';
 
 import { API_BASE_URL } from '@/lib/constants';
 
@@ -9,57 +9,70 @@ export const runtime = 'edge';
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
+
     const month = searchParams.get('month');
     const year = searchParams.get('year') ?? new Date().getFullYear().toString();
 
-    let apiUrl = API_BASE_URL;
-    if (month || year) {
-      apiUrl += `?year=${year}`;
-      if (month) apiUrl += `&month=${month}`;
+    let apiUrl = `${API_BASE_URL}?year=${year}`;
+
+    if (month) {
+      apiUrl += `&month=${month}`;
     }
 
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
       if (response.status === 404) {
-        return NextResponse.json(
-          {
-            message: 'No holidays found for the specified month/year.',
-            filter: { month: month ?? 'all', year },
-            data: [],
-            lastFetch: new Date().toISOString(),
-          },
-          { status: 404 },
-        );
+        const result: GetHolidayEntriesResponse = {
+          success: true,
+          status: 'DATA_NOT_AVAILABLE',
+          message: 'Data kalender libur yang diminta belum tersedia.',
+          data: [],
+          lastFetch: new Date().toISOString(),
+        };
+
+        return NextResponse.json(result);
       }
 
-      throw new Error(`Unexpected response from external data provider`);
+      const result: GetHolidayEntriesResponse = {
+        success: false,
+        status: 'THIRD_PARTY_UNAVAILABLE',
+        message: 'Gagal mengambil data kalender libur dari sumber pihak ketiga.',
+        data: [],
+        lastFetch: new Date().toISOString(),
+      };
+
+      return NextResponse.json(result, { status: 502 });
     }
 
     const responseData: ApiHolidayEntry[] = await response.json();
 
-    const data: HolidayEntry[] = responseData.map((holiday: ApiHolidayEntry) => ({
+    const data: HolidayEntry[] = responseData.map((holiday) => ({
       holidayDate: holiday.tanggal,
       holidayName: holiday.keterangan,
       isLeave: holiday.is_cuti,
     }));
 
-    return NextResponse.json(
-      {
-        message: 'Data fetched successfully',
-        filter: { month: month ?? 'all', year },
-        data,
-        lastFetch: new Date().toISOString(),
-      },
-      { status: 200 },
-    );
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error: 'Failed to fetch data',
-        message: error instanceof Error ? error.message : 'Unknown error occurred',
-      },
-      { status: 500 },
-    );
+    const result: GetHolidayEntriesResponse = {
+      success: true,
+      status: 'OK',
+      message: 'Berhasil mengambil data hari libur.',
+      data,
+      lastFetch: new Date().toISOString(),
+    };
+
+    return NextResponse.json(result);
+  } catch {
+    const result: GetHolidayEntriesResponse = {
+      success: false,
+      status: 'THIRD_PARTY_UNAVAILABLE',
+      message: 'Terjadi kesalahan saat mengambil data kalender libur dari sumber pihak ketiga.',
+      data: [],
+      lastFetch: new Date().toISOString(),
+    };
+
+    return NextResponse.json(result, {
+      status: 502,
+    });
   }
 }

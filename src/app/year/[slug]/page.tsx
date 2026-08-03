@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 
 import { Link } from 'next-view-transitions';
 
+import DataFetchError from '@/components/DataFetchError';
 import HolidayCalendar from '@/components/HolidayCalendar';
 import { buttonVariants } from '@/components/ui/Button';
 
@@ -16,10 +17,11 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+
   const year = Number(slug);
   const currentYear = new Date().getFullYear();
 
-  if (isNaN(year)) {
+  if (Number.isNaN(year)) {
     redirect(`/year/${currentYear}`);
   }
 
@@ -32,17 +34,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function YearPage({ params }: Props) {
   const { slug } = await params;
+
   const year = Number(slug);
   const currentYear = new Date().getFullYear();
 
-  if (isNaN(year)) {
+  if (Number.isNaN(year)) {
     redirect(`/year/${currentYear}`);
   }
 
   const holidays = await fetchHolidays(year);
 
-  if (holidays.data.length === 0) {
+  if (holidays.status === 'DATA_NOT_AVAILABLE') {
     notFound();
+  }
+
+  if (holidays.status === 'THIRD_PARTY_UNAVAILABLE' || holidays.status === 'UNKNOWN') {
+    return <DataFetchError description={holidays.message} />;
   }
 
   return (
@@ -51,7 +58,9 @@ export default async function YearPage({ params }: Props) {
         <Link className={buttonVariants()} href={`/year/${year - 1}`}>
           {year - 1}
         </Link>
+
         <h1 className="text-xl font-bold md:text-3xl">{year}</h1>
+
         <Link className={buttonVariants()} href={`/year/${year + 1}`}>
           {year + 1}
         </Link>

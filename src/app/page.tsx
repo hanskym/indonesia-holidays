@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import DataFetchError from '@/components/DataFetchError';
 import TodayHoliday from '@/components/TodayHoliday';
 import UpcomingHolidays from '@/components/UpcomingHolidays';
 
@@ -17,18 +18,30 @@ export default async function HomePage() {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
-  let { data: allHolidays, lastFetch } = await fetchHolidays(currentYear);
+  const initialResult = await fetchHolidays(currentYear);
+
+  if (initialResult.status === 'THIRD_PARTY_UNAVAILABLE' || initialResult.status === 'UNKNOWN') {
+    return <DataFetchError description={initialResult.message} />;
+  }
+
+  let allHolidays = initialResult.data;
+  let lastFetch = initialResult.lastFetch;
+
   const upcomingHolidayCount = 4;
 
-  const todayHoliday = getTodayHoliday(allHolidays, currentDate);
   let upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
 
-  if (upcomingHolidays.length < upcomingHolidayCount) {
-    const nextYearHolidays = await fetchHolidays(currentYear + 1);
+  const todayHoliday = getTodayHoliday(allHolidays, currentDate);
 
-    allHolidays = [...allHolidays, ...nextYearHolidays.data];
-    upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
-    lastFetch = nextYearHolidays.lastFetch || lastFetch;
+  if (upcomingHolidays.length < upcomingHolidayCount) {
+    const nextYearResult = await fetchHolidays(currentYear + 1);
+
+    if (nextYearResult.status === 'OK') {
+      allHolidays = [...allHolidays, ...nextYearResult.data];
+      lastFetch = nextYearResult.lastFetch ?? lastFetch;
+
+      upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
+    }
   }
 
   const holidaysToShow = todayHoliday ? upcomingHolidays.slice(0, 3) : upcomingHolidays.slice(1, 4);
