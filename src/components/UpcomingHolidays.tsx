@@ -29,7 +29,7 @@ export default function UpcomingHolidays({
       <div className="relative z-10 mt-4 grid grid-cols-6 gap-3">
         {holidaysToShow.length === 0 ? (
           <Card className="group col-span-full">
-            <CardContent className="flex-grow space-y-8 rounded-lg p-6">
+            <CardContent className="grow space-y-8 rounded-lg p-6">
               <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
                 Data Tidak Tersedia
               </CardTitle>
@@ -44,7 +44,7 @@ export default function UpcomingHolidays({
               key={holiday.holidayDate.toString()}
               className="group col-span-full md:col-span-2"
             >
-              <CardContent className="flex-grow space-y-8 rounded-t-lg p-6">
+              <CardContent className="grow space-y-8 rounded-t-lg p-6">
                 <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
                   <span className="text-4xl font-semibold">
                     {(index + 1).toString().padStart(2, '0')}

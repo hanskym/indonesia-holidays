@@ -23,7 +23,7 @@ export default function HolidayCalendar({
         {holidaysByMonth.map((data, index) => (
           <div key={`${year}-${index}`} className="group col-span-1">
             <Card>
-              <CardContent className="flex-grow space-y-8 rounded-t-lg p-6">
+              <CardContent className="grow space-y-8 rounded-t-lg p-6">
                 <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
                   <span className="text-4xl font-semibold">
                     {(index + 1).toString().padStart(2, '0')}

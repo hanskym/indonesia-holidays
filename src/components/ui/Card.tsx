@@ -21,7 +21,7 @@ const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   ...props
 }) => (
-  <div className={cn('flex-grow space-y-8 rounded-t-lg bg-card-content p-6', className)} {...props}>
+  <div className={cn('grow space-y-8 rounded-t-lg bg-card-content p-6', className)} {...props}>
     {children}
   </div>
 );

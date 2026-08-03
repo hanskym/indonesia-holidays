@@ -75,7 +75,7 @@ export default function TodayHoliday({
             )}
           </div>
         </div>
-        <div className="relative mt-6 -mr-[34px] -mb-[34px] h-fit overflow-hidden rounded-tl-lg border-2 border-border bg-card-content px-3 py-6 transition-all duration-300 sm:mt-auto sm:ml-6">
+        <div className="relative mt-6 -mr-8.5 -mb-8.5 h-fit overflow-hidden rounded-tl-lg border-2 border-border bg-card-content px-3 py-6 transition-all duration-300 sm:mt-auto sm:ml-6">
           <div className="absolute top-2 left-3 flex gap-1">
             <span className="block size-2 rounded-full bg-border"></span>
             <span className="block size-2 rounded-full bg-border"></span>
