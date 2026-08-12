@@ -2,17 +2,16 @@ import type { Metadata, Viewport } from 'next';
 
 import { ViewTransitions } from 'next-view-transitions';
 
-import { siteConfig } from '@/config/site';
-import { uiFontMono, uiFontSans } from '@/lib/fonts';
-
-import '@/styles/globals.css';
-
 import Container from '@/components/Container';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/ThemeProvider';
 
+import { siteConfig } from '@/config/site';
+import { uiFontMono, uiFontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
+
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: {

@@ -5,8 +5,6 @@ import type { GetHolidayEntriesResponse, HolidayEntry } from '@/types/holiday';
 import { API_BASE_URL } from '@/lib/constants';
 import { apiHolidaysResponseSchema, holidaysQuerySchema } from '@/lib/schema';
 
-export const runtime = 'edge';
-
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 

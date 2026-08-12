@@ -9,8 +9,6 @@ import { buttonVariants } from '@/components/ui/Button';
 
 import { fetchHolidays } from '@/lib/fetch';
 
-export const runtime = 'edge';
-
 type Props = {
   params: Promise<{ slug: string }>;
 };
