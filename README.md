@@ -7,4 +7,4 @@ Check if today is a public holiday in Indonesia — covering national holidays a
 - ✅ Shows whether **today** is a holiday
 - ⏳ Displays **how many days left** until the next holiday
 - 📆 View full list of holidays for **this year** and **last year**
-- 🔍 Powered by [DayOff API](https://dayoffapi.vercel.app)
+- 🔍 Powered by [Tanggal Merah API](https://upset.dev/tanggalmerah)

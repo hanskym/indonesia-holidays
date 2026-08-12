@@ -1,9 +1,3 @@
-export type ApiHolidayEntry = {
-  tanggal: string;
-  keterangan: string;
-  is_cuti: boolean;
-};
-
 export type HolidayEntry = {
   holidayDate: Date | string;
   holidayName: string;
@@ -14,7 +8,8 @@ export interface UpcomingHoliday extends HolidayEntry {
   daysUntil: number;
 }
 
-export type HolidayStatus = 'OK' | 'DATA_NOT_AVAILABLE' | 'THIRD_PARTY_UNAVAILABLE' | 'UNKNOWN';
+export type HolidayStatus =
+  'OK' | 'INVALID_PARAMS' | 'DATA_NOT_AVAILABLE' | 'THIRD_PARTY_UNAVAILABLE' | 'UNKNOWN';
 
 export type GetHolidayEntriesResponse = {
   success: boolean;

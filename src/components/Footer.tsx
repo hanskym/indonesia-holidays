@@ -32,12 +32,12 @@ export default function Footer() {
           Sumber data:{' '}
           <a
             className="transition-all duration-300 hover:text-text/80"
-            href="https://dayoffapi.vercel.app"
+            href="https://upset.dev/tanggalmerah"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="dayoff-API"
+            aria-label="Tanggal Merah API"
           >
-            dayoff-API
+            Tanggal Merah API
           </a>
         </p>
       </div>
