@@ -13,7 +13,7 @@ export default function Error({
   return (
     <div className="flex min-h-[80dvh] flex-col items-center justify-center space-y-8">
       <div className="text-center">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-5xl font-bold">
           <span className="sr-only">Error</span>Terjadi Kesalahan!
         </h2>
         <p className="mt-4">
