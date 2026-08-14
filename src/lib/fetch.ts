@@ -39,7 +39,7 @@ export const getHolidays = cache(
       response = await fetch(apiUrl, {
         next: {
           revalidate: HOLIDAYS_REVALIDATE_SECONDS,
-          tags: ['holidays', `holidays-${year}`],
+          tags: ['holidays-data', `holidays-${year}`],
         },
       });
     } catch {
@@ -143,7 +143,7 @@ export const getAvailableYears = cache(async (): Promise<GetAvailableYearsRespon
     response = await fetch(apiUrl, {
       next: {
         revalidate: YEARS_REVALIDATE_SECONDS,
-        tags: ['holiday-years'],
+        tags: ['holidays-data', 'holiday-years'],
       },
     });
   } catch {
