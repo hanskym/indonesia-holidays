@@ -7,11 +7,27 @@ import DataFetchError from '@/components/DataFetchError';
 import HolidayCalendar from '@/components/HolidayCalendar';
 import { buttonVariants } from '@/components/ui/Button';
 
-import { fetchHolidays } from '@/lib/fetch';
+import { getAvailableYears, getHolidays } from '@/lib/fetch';
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+export async function generateStaticParams() {
+  const currentYear = new Date().getFullYear();
+
+  const availableYears = await getAvailableYears();
+
+  if (availableYears.status !== 'OK') {
+    return [];
+  }
+
+  const pastYears = availableYears.data.filter((year) => year < currentYear);
+
+  return pastYears.map((year) => ({ slug: year.toString() }));
+}
+
+export const revalidate = 21600; // 6 hours
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -40,7 +56,13 @@ export default async function YearPage({ params }: Props) {
     redirect(`/year/${currentYear}`);
   }
 
-  const holidays = await fetchHolidays(year);
+  const availableYears = await getAvailableYears();
+
+  if (availableYears.status === 'OK' && !availableYears.data.includes(year)) {
+    notFound();
+  }
+
+  const holidays = await getHolidays({ year });
 
   if (holidays.status === 'DATA_NOT_AVAILABLE') {
     notFound();

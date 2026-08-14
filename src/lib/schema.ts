@@ -68,3 +68,24 @@ export const apiHolidaysResponseSchema = z.discriminatedUnion('success', [
 
 export type ApiHolidayEntry = z.infer<typeof apiHolidayEntrySchema>;
 export type ApiHolidaysResponse = z.infer<typeof apiHolidaysResponseSchema>;
+
+export const apiYearsSuccessSchema = z.object({
+  success: z.literal(true),
+  data: z.array(z.number().int()),
+  meta: z.object({
+    total: z.number().optional().default(0),
+  }),
+});
+
+export const apiYearsErrorSchema = z.object({
+  success: z.literal(false),
+  error: z.string(),
+  code: z.string().optional(),
+});
+
+export const apiYearsResponseSchema = z.discriminatedUnion('success', [
+  apiYearsSuccessSchema,
+  apiYearsErrorSchema,
+]);
+
+export type ApiYearsResponse = z.infer<typeof apiYearsResponseSchema>;

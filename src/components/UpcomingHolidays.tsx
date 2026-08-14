@@ -1,12 +1,11 @@
 import { Link } from 'next-view-transitions';
 
-import { UpcomingHoliday } from '@/types/holiday';
-
 import { Badge } from '@/components/ui/Badge';
 import { buttonVariants } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/components/ui/Card';
 
 import { formatDate } from '@/lib/format';
+import { UpcomingHoliday } from '@/lib/types';
 
 interface UpcomingHolidaysProps {
   holidaysToShow: UpcomingHoliday[];

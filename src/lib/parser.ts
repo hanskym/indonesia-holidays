@@ -1,8 +1,7 @@
 import { compareAsc, differenceInDays, isSameDay } from 'date-fns';
 
-import type { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
-
 import { convertToIndonesianTime, formatDate } from '@/lib/format';
+import type { HolidayEntry, UpcomingHoliday } from '@/lib/types';
 
 export const getTodayHoliday = (
   holidays: HolidayEntry[],

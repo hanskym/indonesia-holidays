@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import type { GetHolidayEntriesResponse, HolidayEntry } from '@/types/holiday';
+import { FETCH_STATUS_TO_HTTP_STATUS, getHolidays } from '@/lib/fetch';
+import { holidaysQuerySchema } from '@/lib/schema';
+import type { GetHolidayEntriesResponse } from '@/lib/types';
 
-import { API_BASE_URL } from '@/lib/constants';
-import { apiHolidaysResponseSchema, holidaysQuerySchema } from '@/lib/schema';
+const SUCCESS_CACHE_CONTROL = 'public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400';
+const ERROR_CACHE_CONTROL = 'no-store';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -27,126 +29,18 @@ export async function GET(request: NextRequest) {
       lastFetch: new Date().toISOString(),
     };
 
-    return NextResponse.json(result, { status: 400 });
+    return NextResponse.json(result, {
+      status: 400,
+      headers: { 'Cache-Control': ERROR_CACHE_CONTROL },
+    });
   }
 
-  const { year, month } = parsedQuery.data;
+  const result = await getHolidays(parsedQuery.data);
 
-  let apiUrl = `${API_BASE_URL}/holidays?year=${year}`;
-
-  if (month) {
-    apiUrl += `&month=${month}`;
-  }
-
-  let response: Response;
-  try {
-    response = await fetch(apiUrl);
-  } catch {
-    const result: GetHolidayEntriesResponse = {
-      success: false,
-      status: 'THIRD_PARTY_UNAVAILABLE',
-      message: 'Penyedia API hari libur tidak dapat dihubungi.',
-      data: [],
-      lastFetch: new Date().toISOString(),
-    };
-
-    return NextResponse.json(result, { status: 503 });
-  }
-
-  let rawPayload: unknown;
-  try {
-    rawPayload = await response.json();
-  } catch {
-    const result: GetHolidayEntriesResponse = {
-      success: false,
-      status: 'THIRD_PARTY_UNAVAILABLE',
-      message: 'Penyedia API hari libur mengembalikan respons yang tidak valid.',
-      data: [],
-      lastFetch: new Date().toISOString(),
-    };
-
-    return NextResponse.json(result, { status: 502 });
-  }
-
-  const parsedPayload = apiHolidaysResponseSchema.safeParse(rawPayload);
-
-  if (!parsedPayload.success) {
-    const result: GetHolidayEntriesResponse = {
-      success: false,
-      status: 'THIRD_PARTY_UNAVAILABLE',
-      message: 'Penyedia API hari libur mengembalikan format data yang tidak sesuai.',
-      data: [],
-      lastFetch: new Date().toISOString(),
-    };
-
-    return NextResponse.json(result, { status: 502 });
-  }
-
-  const payload = parsedPayload.data;
-
-  try {
-    if (!response.ok || !payload.success) {
-      if (response.status === 404) {
-        const result: GetHolidayEntriesResponse = {
-          success: false,
-          status: 'DATA_NOT_AVAILABLE',
-          message: 'Data kalender libur untuk parameter yang diminta belum tersedia.',
-          data: [],
-          lastFetch: new Date().toISOString(),
-        };
-
-        return NextResponse.json(result, { status: 404 });
-      }
-
-      if (response.status === 400) {
-        const message = !payload.success ? payload.error : 'Parameter permintaan tidak valid.';
-
-        const result: GetHolidayEntriesResponse = {
-          success: false,
-          status: 'INVALID_PARAMS',
-          message,
-          data: [],
-          lastFetch: new Date().toISOString(),
-        };
-
-        return NextResponse.json(result, { status: 400 });
-      }
-
-      const result: GetHolidayEntriesResponse = {
-        success: false,
-        status: 'THIRD_PARTY_UNAVAILABLE',
-        message: 'Gagal mengambil data kalender libur dari penyedia API.',
-        data: [],
-        lastFetch: new Date().toISOString(),
-      };
-
-      return NextResponse.json(result, { status: 502 });
-    }
-
-    const data: HolidayEntry[] = payload.data.map((holiday) => ({
-      holidayDate: holiday.date,
-      holidayName: holiday.name,
-      isLeave: holiday.type === 'leave',
-    }));
-
-    const result: GetHolidayEntriesResponse = {
-      success: true,
-      status: 'OK',
-      message: 'Berhasil mengambil data hari libur.',
-      data,
-      lastFetch: new Date().toISOString(),
-    };
-
-    return NextResponse.json(result);
-  } catch {
-    const result: GetHolidayEntriesResponse = {
-      success: false,
-      status: 'UNKNOWN',
-      message: 'Terjadi kesalahan tak terduga pada server.',
-      data: [],
-      lastFetch: new Date().toISOString(),
-    };
-
-    return NextResponse.json(result, { status: 500 });
-  }
+  return NextResponse.json(result, {
+    status: FETCH_STATUS_TO_HTTP_STATUS[result.status],
+    headers: {
+      'Cache-Control': result.status === 'OK' ? SUCCESS_CACHE_CONTROL : ERROR_CACHE_CONTROL,
+    },
+  });
 }

@@ -1,11 +1,10 @@
-import { HolidayEntry, UpcomingHoliday } from '@/types/holiday';
-
 import ImageDisplay from '@/components/ImageDisplay';
 // import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
 import { Badge } from '@/components/ui/Badge';
 import { Icons } from '@/components/ui/Icons';
 
 import { formatDate } from '@/lib/format';
+import { HolidayEntry, UpcomingHoliday } from '@/lib/types';
 
 interface TodayHolidayProps {
   currentDate: Date;

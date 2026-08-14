@@ -5,18 +5,20 @@ import TodayHoliday from '@/components/TodayHoliday';
 import UpcomingHolidays from '@/components/UpcomingHolidays';
 
 import { siteConfig } from '@/config/site';
-import { fetchHolidays } from '@/lib/fetch';
+import { getHolidays } from '@/lib/fetch';
 import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 
 export const metadata: Metadata = {
   title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
 };
 
+export const revalidate = 180; // 3 minutes
+
 export default async function HomePage() {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
-  const initialResult = await fetchHolidays(currentYear);
+  const initialResult = await getHolidays({ year: currentYear });
 
   if (initialResult.status === 'THIRD_PARTY_UNAVAILABLE' || initialResult.status === 'UNKNOWN') {
     return <DataFetchError description={initialResult.message} />;
@@ -32,7 +34,7 @@ export default async function HomePage() {
   const todayHoliday = getTodayHoliday(allHolidays, currentDate);
 
   if (upcomingHolidays.length < upcomingHolidayCount) {
-    const nextYearResult = await fetchHolidays(currentYear + 1);
+    const nextYearResult = await getHolidays({ year: currentYear + 1 });
 
     if (nextYearResult.status === 'OK') {
       allHolidays = [...allHolidays, ...nextYearResult.data];

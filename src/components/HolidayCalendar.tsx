@@ -1,10 +1,9 @@
-import { HolidayEntry } from '@/types/holiday';
-
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/components/ui/Card';
 
 import { formatDate } from '@/lib/format';
 import { groupHolidaysByMonth } from '@/lib/parser';
+import { HolidayEntry } from '@/lib/types';
 
 interface HolidayCalendarProps {
   holidays: HolidayEntry[];
