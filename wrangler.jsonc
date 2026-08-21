@@ -22,6 +22,6 @@
     "binding": "IMAGES"
   },
   "vars": {
-    "NEXT_BASE_URL": "https://indonesia-holidays.itshansky.workers.dev"
+    "NEXT_BASE_URL": "https://indonesia-holidays.hanskym.workers.dev"
   }
 }

@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Hari Libur Indonesia',
-  url: 'https://indonesia-holidays.itshansky.workers.dev',
+  url: 'https://indonesia-holidays.hanskym.workers.dev',
   aboutMe: {
     altName: 'Hansky Mulya',
     fullName: 'Farhan Rinsky Mulya',
