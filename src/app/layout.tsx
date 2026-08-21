@@ -79,7 +79,7 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html
-        lang="en"
+        lang="id"
         className={cn(uiFontSans.variable, uiFontMono.variable)}
         suppressHydrationWarning
       >
