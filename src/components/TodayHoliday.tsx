@@ -23,13 +23,15 @@ export default function TodayHoliday({
     <div className="relative overflow-hidden rounded-xl border border-border bg-card p-8">
       <div className="absolute top-4 right-4 z-20">
         {lastFetch && (
-          <div className="flex items-center gap-2 text-right text-xs text-text-muted">
-            <div className="flex flex-col gap-x-1 md:flex-row">
-              <p>Data diperbarui pada</p>
-              <p>{formatDate(lastFetch, 'dd MMM yyyy, HH:mm:ss')}</p>
-            </div>
-
+          <div className="flex flex-col items-end gap-2 text-right text-xs text-text-muted">
             {/* <RevalidateHolidaysButton /> */}
+
+            <div>
+              <span>Data diperbarui pada</span>{' '}
+              <time className="block md:inline" dateTime={lastFetch}>
+                {formatDate(lastFetch, 'dd MMM yyyy, HH:mm:ss')}
+              </time>
+            </div>
           </div>
         )}
       </div>
