@@ -10,6 +10,7 @@ import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 
 export const metadata: Metadata = {
   title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
+  description: siteConfig.description,
 };
 
 export const revalidate = 180; // 3 minutes
@@ -18,44 +19,38 @@ export default async function HomePage() {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
-  const initialResult = await getHolidays({ year: currentYear });
+  const currentYearResult = await getHolidays({
+    year: currentYear,
+  });
 
-  if (initialResult.status === 'THIRD_PARTY_UNAVAILABLE' || initialResult.status === 'UNKNOWN') {
-    return <DataFetchError description={initialResult.message} />;
+  if (
+    currentYearResult.status === 'THIRD_PARTY_UNAVAILABLE' ||
+    currentYearResult.status === 'UNKNOWN'
+  ) {
+    return <DataFetchError description={currentYearResult.message} />;
   }
 
-  let allHolidays = initialResult.data;
-  let lastFetch = initialResult.lastFetch;
+  let allHolidays = currentYearResult.data;
+  let lastFetch = currentYearResult.lastFetch;
 
-  const upcomingHolidayCount = 4;
+  // Include next year's holidays when the calendar is available.
+  const nextYearResult = await getHolidays({
+    year: currentYear + 1,
+  });
 
-  let upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
+  if (nextYearResult.status === 'OK' && nextYearResult.data.length > 0) {
+    allHolidays = [...allHolidays, ...nextYearResult.data];
+    lastFetch = nextYearResult.lastFetch ?? lastFetch;
+  }
 
   const todayHoliday = getTodayHoliday(allHolidays, currentDate);
-
-  if (upcomingHolidays.length < upcomingHolidayCount) {
-    const nextYearResult = await getHolidays({ year: currentYear + 1 });
-
-    if (nextYearResult.status === 'OK') {
-      allHolidays = [...allHolidays, ...nextYearResult.data];
-      lastFetch = nextYearResult.lastFetch ?? lastFetch;
-
-      upcomingHolidays = getUpcomingHolidays(allHolidays, upcomingHolidayCount, currentDate);
-    }
-  }
-
-  const holidaysToShow = todayHoliday ? upcomingHolidays.slice(0, 3) : upcomingHolidays.slice(1, 4);
+  const upcomingHolidays = getUpcomingHolidays(allHolidays, currentDate);
 
   return (
-    <div className="flex flex-col justify-center space-y-4">
-      <TodayHoliday
-        currentDate={currentDate}
-        todayHoliday={todayHoliday}
-        nextHoliday={upcomingHolidays[0]}
-        lastFetch={lastFetch}
-      />
+    <div className="grid grid-cols-1 items-stretch gap-y-8 pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:divide-x lg:divide-border lg:pt-10">
+      <TodayHoliday currentDate={currentDate} todayHoliday={todayHoliday} lastFetch={lastFetch} />
 
-      <UpcomingHolidays holidaysToShow={holidaysToShow} year={currentYear} />
+      <UpcomingHolidays holidaysToShow={upcomingHolidays} year={currentYear} />
     </div>
   );
 }

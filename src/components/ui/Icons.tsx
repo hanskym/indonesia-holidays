@@ -71,6 +71,42 @@ export const Icons = {
       ></path>
     </svg>
   ),
+  arrowleft: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        d="M21 12H3m0 0l8.5-8.5M3 12l8.5 8.5"
+      />
+    </svg>
+  ),
+  arrowright: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        d="M3 12h18m0 0l-8.5-8.5M21 12l-8.5 8.5"
+      />
+    </svg>
+  ),
+  arrowtopright: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        d="M6 19L19 6m0 0v12.48M19 6H6.52"
+      />
+    </svg>
+  ),
   github: (props: IconProps) => (
     <svg
       width="15"
@@ -86,6 +122,35 @@ export const Icons = {
         fillRule="evenodd"
         clipRule="evenodd"
       ></path>
+    </svg>
+  ),
+  light: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <g fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="4" strokeLinejoin="round" />
+        <path
+          strokeLinecap="round"
+          d="M20 12h1M3 12h1m8 8v1m0-18v1m5.657 13.657l.707.707M5.636 5.636l.707.707m0 11.314l-.707.707M18.364 5.636l-.707.707"
+        />
+      </g>
+    </svg>
+  ),
+  dark: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M11.535 3.519a1 1 0 0 0-1.061-1.403C5.675 2.852 2 6.996 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10l-.004-.28a1 1 0 0 0-1.571-.793a6 6 0 0 1-8.89-7.409"
+        clipRule="evenodd"
+      />
+    </svg>
+  ),
+  copyright: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12S6.48 2 12 2m0 5c-2.76 0-5 2.24-5 5s2.24 5 5 5a5 5 0 0 0 4.288-2.428l-1.715-1.028A3 3 0 1 1 12 9c1.093 0 2.05.584 2.573 1.457l1.715-1.03A5 5 0 0 0 12 7"
+      />
     </svg>
   ),
 };

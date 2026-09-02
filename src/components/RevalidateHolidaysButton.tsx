@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/Button';
 import { Icons } from '@/components/ui/Icons';
 
 import { revalidateTag } from '@/lib/revalidate';
+import { cn } from '@/lib/utils';
 
 type RevalidationStatus = 'idle' | 'success' | 'error';
 
-export function RevalidateHolidaysButton() {
+export default function RevalidateHolidaysButton() {
   const [isRevalidating, setIsRevalidating] = React.useState<boolean>(false);
   const [revalidationStatus, setRevalidationStatus] = React.useState<RevalidationStatus>('idle');
 
@@ -52,7 +53,7 @@ export function RevalidateHolidaysButton() {
       ) : revalidationStatus === 'error' ? (
         <Icons.error />
       ) : (
-        <Icons.reload className={isRevalidating ? 'animate-loading' : undefined} />
+        <Icons.reload className={cn(isRevalidating && 'animate-loading')} />
       )}
     </Button>
   );

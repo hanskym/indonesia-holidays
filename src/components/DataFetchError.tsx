@@ -1,5 +1,3 @@
-import { Icons } from '@/components/ui/Icons';
-
 import { cn } from '@/lib/utils';
 
 interface DataFetchErrorProps {
@@ -10,23 +8,19 @@ interface DataFetchErrorProps {
 
 export default function DataFetchError({
   title = 'Data Hari Libur Tidak Tersedia',
-  description = 'Sumber data pihak ketiga sedang tidak dapat diakses. Silakan coba lagi beberapa saat lagi.',
+  description = 'Informasi dari penyedia data pihak ketiga sedang tidak dapat dimuat. Silakan coba kembali beberapa saat lagi.',
   className,
 }: DataFetchErrorProps) {
   return (
-    <div
-      className={cn(
-        'relative flex min-h-[80dvh] flex-col items-center justify-center gap-6 overflow-hidden rounded-xl border border-border bg-card p-8 text-center',
-        className,
-      )}
-    >
-      <div className="relative flex aspect-square size-12 rounded-full border border-error/40 bg-error/10 text-error before:absolute before:-inset-2 before:rounded-full before:border before:border-border">
-        <Icons.error className="m-auto size-6" />
-      </div>
+    <div className={cn('flex min-h-[80dvh] flex-col items-center justify-center', className)}>
+      <div className="w-full max-w-2xl space-y-5">
+        <div>
+          <span className="font-mono text-xs tracking-[0.16em] text-error uppercase">ERROR</span>
 
-      <div className="max-w-md space-y-2">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <p className="text-sm text-text-muted">{description}</p>
+          <h2 className="text-4xl leading-tight tracking-[-0.04em] md:text-5xl">{title}</h2>
+        </div>
+
+        <p className="text-sm leading-6 text-text-muted">{description}</p>
       </div>
     </div>
   );

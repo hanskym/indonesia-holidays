@@ -2,73 +2,100 @@ import { Link } from 'next-view-transitions';
 
 import { Badge } from '@/components/ui/Badge';
 import { buttonVariants } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/components/ui/Card';
 
 import { formatDate } from '@/lib/format';
 import { UpcomingHoliday } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface UpcomingHolidaysProps {
   holidaysToShow: UpcomingHoliday[];
   year: number;
 }
 
-export default function UpcomingHolidays({
-  holidaysToShow,
-  year = new Date().getFullYear(),
-}: UpcomingHolidaysProps) {
+export default function UpcomingHolidays({ holidaysToShow, year }: UpcomingHolidaysProps) {
   return (
-    <div className="relative rounded-xl border border-border bg-card p-4">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="text-lg font-medium">Libur Nasional Berikutnya</h2>
-        <Link className={buttonVariants()} href={`/year/${year}`}>
-          Selengkapnya
+    <section className="flex h-full min-h-0 flex-col lg:pl-10">
+      <header className="flex items-end justify-between border-b border-border pb-3">
+        <div className="lg:-mt-1.5">
+          <span className="font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
+            Agenda
+          </span>
+
+          <h2
+            id="upcoming-holidays"
+            className="mt-1 text-xl leading-none font-normal tracking-tight uppercase md:text-2xl lg:text-3xl"
+          >
+            Libur Mendatang
+          </h2>
+        </div>
+
+        <Link
+          href={`/year/${year}`}
+          className={cn(
+            buttonVariants({ className: 'font-mono uppercase md:text-xs lg:text-sm', size: 'sm' }),
+          )}
+        >
+          Arsip {year}
         </Link>
-      </div>
+      </header>
 
-      <div className="relative z-10 mt-4 grid grid-cols-6 gap-3">
-        {holidaysToShow.length === 0 ? (
-          <Card className="group col-span-full">
-            <CardContent className="grow space-y-8 rounded-lg p-6">
-              <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
-                Data Tidak Tersedia
-              </CardTitle>
-              <CardDescription>
-                Informasi mengenai hari libur selanjutnya belum tersedia.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        ) : (
+      <div className="scrollbar-width:thin flex max-h-186 min-h-0 flex-1 flex-col divide-y divide-border overflow-y-auto">
+        {holidaysToShow.length > 0 ? (
           holidaysToShow.map((holiday, index) => (
-            <Card
+            <article
               key={holiday.holidayDate.toString()}
-              className="group col-span-full md:col-span-2"
+              className="grid grid-cols-[28px_minmax(0,1fr)_auto] items-start gap-3 py-4 pr-1 md:grid-cols-[36px_minmax(0,1fr)_auto] md:py-5"
             >
-              <CardContent className="grow space-y-8 rounded-t-lg p-6">
-                <CardTitle className="flex flex-nowrap items-center justify-between gap-4 font-bold">
-                  <span className="text-4xl font-semibold">
-                    {(index + 1).toString().padStart(2, '0')}
-                  </span>
+              <span className="pt-0.5 font-mono text-[10px] tracking-[0.3em] text-text-muted">
+                {String(index + 1).padStart(2, '0')}
+              </span>
 
-                  {holiday.isLeave && (
-                    <Badge className="p-1 text-xs" variant="success">
-                      Cuti Bersama
-                    </Badge>
-                  )}
-                </CardTitle>
-                <CardDescription>
-                  <h3 className="text-3xl font-semibold">{holiday.holidayName}</h3>
-                </CardDescription>
-              </CardContent>
-              <CardFooter className="items-center justify-between gap-2">
-                <p className="flex items-center gap-3">
+              <div className="min-w-0 pr-2">
+                <h3 className="text-base leading-snug font-medium tracking-tight md:text-lg lg:text-xl">
+                  {holiday.holidayName}
+                </h3>
+
+                <p className="mt-1 font-mono text-[10px] tracking-widest text-text-muted uppercase">
                   {formatDate(holiday.holidayDate, 'EEEE, dd MMMM yyyy')}
                 </p>
-                <p>{holiday.daysUntil} hari lagi</p>
-              </CardFooter>
-            </Card>
+
+                {holiday.isLeave && (
+                  <Badge className="mt-1.5 font-mono text-[10px] tracking-[0.15em] uppercase">
+                    * Cuti Bersama
+                  </Badge>
+                )}
+              </div>
+
+              <div className="pt-0.5 text-right font-mono">
+                <span className="block text-lg leading-none tracking-tighter md:text-2xl">
+                  {holiday.daysUntil}
+                </span>
+
+                <span className="mt-1 block text-[8px] tracking-[0.15em] text-text-muted uppercase md:text-[10px]">
+                  Hari Lagi
+                </span>
+              </div>
+            </article>
           ))
+        ) : (
+          <div className="flex min-h-64 flex-1 items-center justify-center">
+            <div className="text-center">
+              <p className="font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
+                Tidak Ada Libur Mendatang
+              </p>
+
+              <p className="mt-2 text-2xl leading-none font-medium tracking-tight">
+                Agenda Berikutnya Belum Tersedia
+              </p>
+            </div>
+          </div>
         )}
       </div>
-    </div>
+
+      <footer className="mt-auto flex items-center justify-between border-t border-border pt-3 font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
+        <span>Total: {holidaysToShow.length} Agenda</span>
+        <span>Libur Mendatang</span>
+      </footer>
+    </section>
   );
 }

@@ -8,7 +8,7 @@ import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/ThemeProvider';
 
 import { siteConfig } from '@/config/site';
-import { uiFontMono, uiFontSans } from '@/lib/fonts';
+import { uiFontMono, uiFontSerif } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
@@ -80,18 +80,18 @@ export default function RootLayout({
     <ViewTransitions>
       <html
         lang="id"
-        className={cn(uiFontSans.variable, uiFontMono.variable)}
+        className={cn(uiFontSerif.variable, uiFontMono.variable)}
         suppressHydrationWarning
       >
-        <body className="flex min-h-screen flex-col font-sans">
+        <body className="flex min-h-screen flex-col font-serif antialiased">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+            <Header />
             <Container>
-              <Header />
               <main>{children}</main>
               <Footer />
             </Container>

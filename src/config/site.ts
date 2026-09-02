@@ -1,5 +1,7 @@
 export const siteConfig = {
   name: 'Hari Libur Indonesia',
+  namePrefix: 'Hari Libur',
+  nameSuffix: 'Indonesia',
   url: 'https://indonesia-holidays.hanskym.workers.dev',
   aboutMe: {
     altName: 'Hansky Mulya',

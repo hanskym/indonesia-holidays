@@ -1,93 +1,117 @@
 import ImageDisplay from '@/components/ImageDisplay';
-// import { RevalidateHolidaysButton } from '@/components/RevalidateHolidaysButton';
-import { Badge } from '@/components/ui/Badge';
-import { Icons } from '@/components/ui/Icons';
 
 import { formatDate } from '@/lib/format';
-import { HolidayEntry, UpcomingHoliday } from '@/lib/types';
+import { HolidayEntry } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface TodayHolidayProps {
   currentDate: Date;
   todayHoliday?: HolidayEntry;
-  nextHoliday: UpcomingHoliday;
   lastFetch?: string;
 }
 
-export default function TodayHoliday({
-  currentDate = new Date(),
-  todayHoliday,
-  nextHoliday,
-  lastFetch,
-}: TodayHolidayProps) {
-  return (
-    <div className="relative overflow-hidden rounded-xl border border-border bg-card p-8">
-      <div className="absolute top-4 right-4 z-20">
-        {lastFetch && (
-          <div className="flex flex-col items-end gap-2 text-right text-xs text-text-muted">
-            {/* <RevalidateHolidaysButton /> */}
+export default function TodayHoliday({ currentDate, todayHoliday, lastFetch }: TodayHolidayProps) {
+  const day = formatDate(currentDate, 'dd');
+  const month = formatDate(currentDate, 'MMMM');
+  const year = formatDate(currentDate, 'yyyy');
+  const weekday = formatDate(currentDate, 'EEEE');
 
-            <div>
-              <span>Data diperbarui pada</span>{' '}
-              <time className="block md:inline" dateTime={lastFetch}>
-                {formatDate(lastFetch, 'dd MMM yyyy, HH:mm:ss')}
-              </time>
-            </div>
+  const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+
+  const statusDescription = todayHoliday
+    ? todayHoliday.isLeave
+      ? 'Cuti bersama yang ditetapkan.'
+      : 'Hari libur nasional yang ditetapkan.'
+    : isWeekend
+      ? 'Akhir pekan telah tiba.'
+      : 'Hari kerja reguler.';
+
+  return (
+    <section className="flex h-full flex-col lg:pr-10">
+      <header className="flex items-center justify-between border-b border-border pb-3 font-mono text-[10px] tracking-[0.3em] uppercase">
+        <div>Edisi Harian</div>
+
+        {lastFetch && (
+          <div className="flex items-center gap-2 text-text-muted">
+            <span className="md:hidden">Diperbarui: {formatDate(lastFetch, 'HH:mm')}</span>
+            <span className="hidden md:inline">
+              Diperbarui: {formatDate(lastFetch, 'dd MMM yyyy, HH:mm:ss')}
+            </span>
+
+            {/* <RevalidateHolidaysButton /> */}
           </div>
         )}
-      </div>
-      <div className="mt-4 grid md:grid-cols-2">
-        <div className="relative z-10 flex flex-col justify-between space-y-6">
-          <div className="relative flex aspect-square size-12 rounded-full border border-border before:absolute before:-inset-2 before:rounded-full before:border before:border-border">
-            <Icons.calendar className="m-auto size-6" />
-          </div>
+      </header>
 
-          <div className="space-y-4">
-            <Badge className="p-1">
-              <h1 className="text-sm">Hari ini: {formatDate(currentDate, 'EEEE, dd MMMM yyyy')}</h1>
-            </Badge>
-
-            {todayHoliday ? (
-              <>
-                <h2 className="mb-6 text-3xl font-bold">Hari Ini Libur!</h2>
-                <p className="text-xl font-medium">{todayHoliday.holidayName}</p>
-              </>
-            ) : nextHoliday ? (
-              <>
-                <h2 className="mb-6 text-3xl font-bold">Kapan hari libur terdekat?</h2>
-                <p className="text-xl font-medium">
-                  {nextHoliday.holidayName} -{' '}
-                  {formatDate(nextHoliday.holidayDate, 'EEEE, dd MMMM yyyy')}
-                </p>
-                <p className="mt-4 text-base text-text-muted">
-                  {nextHoliday.daysUntil === 1
-                    ? 'Besok adalah hari libur 🎉'
-                    : `${nextHoliday.daysUntil} hari lagi`}
-                </p>
-              </>
-            ) : (
-              <>
-                <h2 className="mb-6 text-3xl font-bold">
-                  Yah, tidak ada hari libur yang akan datang.
-                </h2>
-                <p className="text-xl font-medium text-text-muted">
-                  Silakan periksa kembali nanti.
-                </p>
-              </>
-            )}
-          </div>
+      <div className="flex flex-col gap-8 border-b border-border py-10 md:flex-row md:gap-12">
+        <div className="flex flex-1 flex-col justify-center">
+          <h1
+            id="today-holiday"
+            className="text-[clamp(2.5rem,5vw,4rem)] leading-none font-normal tracking-tight uppercase"
+          >
+            <span className="text-[clamp(8rem,18vw,10rem)] leading-[0.75] font-light tracking-tighter">
+              {day}{' '}
+            </span>
+            <span className="mt-3 block">
+              {month}, {year}
+            </span>
+          </h1>
         </div>
-        <div className="relative mt-6 -mr-8.5 -mb-8.5 h-fit overflow-hidden rounded-tl-lg border-2 border-border bg-card-content px-3 py-6 transition-all duration-300 sm:mt-auto sm:ml-6">
-          <div className="absolute top-2 left-3 flex gap-1">
-            <span className="block size-2 rounded-full bg-border"></span>
-            <span className="block size-2 rounded-full bg-border"></span>
-            <span className="block size-2 rounded-full bg-border"></span>
+
+        <div className="flex flex-1 flex-col justify-between space-y-6 border-t border-border pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-10">
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">Hari</p>
+
+            <p className={cn('leading-snug font-medium', todayHoliday ? 'text-xl' : 'text-3xl')}>
+              {weekday}
+            </p>
           </div>
 
-          <div className="mt-2 max-h-48">
-            <ImageDisplay todayHoliday={todayHoliday} />
+          {todayHoliday && (
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
+                Libur Nasional
+              </p>
+
+              <p className="text-xl leading-snug font-medium">{todayHoliday.holidayName}</p>
+            </div>
+          )}
+
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
+              Kondisi Saat Ini
+            </p>
+
+            <p className={cn('leading-snug font-medium', todayHoliday ? 'text-xl' : 'text-3xl')}>
+              {statusDescription}
+            </p>
           </div>
         </div>
       </div>
-    </div>
+
+      <figure className="mt-8 flex flex-1 flex-col pb-0">
+        <div className="group relative aspect-video min-h-50 w-full flex-1 overflow-hidden">
+          <div className="relative size-full overflow-hidden">
+            <ImageDisplay todayHoliday={todayHoliday} isWeekend={isWeekend} />
+          </div>
+        </div>
+
+        <figcaption className="mt-auto flex items-center justify-between border-t border-border pt-3 font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
+          <div className="flex items-center gap-2 md:gap-4">
+            <span className="font-bold">FIG. {day}</span>
+            <span>/</span>
+            <span>Apendiks Visual</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="hidden md:inline">
+              Status: {todayHoliday ? 'Hari Libur' : isWeekend ? 'Akhir Pekan' : 'Hari Kerja'}
+            </span>
+            <span className="hidden md:inline">•</span>
+            <span>Edisi {currentDate.getFullYear()}</span>
+          </div>
+        </figcaption>
+      </figure>
+    </section>
   );
 }

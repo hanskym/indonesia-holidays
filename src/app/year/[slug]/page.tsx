@@ -5,31 +5,32 @@ import { Link } from 'next-view-transitions';
 
 import DataFetchError from '@/components/DataFetchError';
 import HolidayCalendar from '@/components/HolidayCalendar';
-import { buttonVariants } from '@/components/ui/Button';
+import { Icons } from '@/components/ui/Icons';
 
 import { getAvailableYears, getHolidays } from '@/lib/fetch';
 
-type Props = {
+type YearPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
   const currentYear = new Date().getFullYear();
-
   const availableYears = await getAvailableYears();
 
   if (availableYears.status !== 'OK') {
     return [];
   }
 
-  const pastYears = availableYears.data.filter((year) => year < currentYear);
-
-  return pastYears.map((year) => ({ slug: year.toString() }));
+  return availableYears.data
+    .filter((year) => year <= currentYear)
+    .map((year) => ({
+      slug: year.toString(),
+    }));
 }
 
 export const revalidate = 21600; // 6 hours
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: YearPageProps): Promise<Metadata> {
   const { slug } = await params;
 
   const year = Number(slug);
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function YearPage({ params }: Props) {
+export default async function YearPage({ params }: YearPageProps) {
   const { slug } = await params;
 
   const year = Number(slug);
@@ -54,12 +55,6 @@ export default async function YearPage({ params }: Props) {
 
   if (Number.isNaN(year)) {
     redirect(`/year/${currentYear}`);
-  }
-
-  const availableYears = await getAvailableYears();
-
-  if (availableYears.status === 'OK' && !availableYears.data.includes(year)) {
-    notFound();
   }
 
   const holidays = await getHolidays({ year });
@@ -73,18 +68,29 @@ export default async function YearPage({ params }: Props) {
   }
 
   return (
-    <div className="flex flex-col justify-center space-y-4">
-      <div className="flex items-center justify-between gap-2 text-sm font-medium">
-        <Link className={buttonVariants()} href={`/year/${year - 1}`}>
+    <div>
+      <nav
+        className="grid grid-cols-[1fr_auto_1fr] items-center border-b border-border py-5 font-mono text-xs tracking-[0.14em] uppercase"
+        aria-label="Navigasi tahun"
+      >
+        <Link
+          href={`/year/${year - 1}`}
+          className="inline-flex items-center gap-1 justify-self-start transition-colors hover:text-text-muted"
+        >
+          <Icons.arrowleft className="size-3" />
           {year - 1}
         </Link>
 
-        <h1 className="text-xl font-bold md:text-3xl">{year}</h1>
+        <span className="px-5">{year}</span>
 
-        <Link className={buttonVariants()} href={`/year/${year + 1}`}>
+        <Link
+          href={`/year/${year + 1}`}
+          className="inline-flex items-center gap-1 justify-self-end transition-colors hover:text-text-muted"
+        >
           {year + 1}
+          <Icons.arrowright className="size-3" />
         </Link>
-      </div>
+      </nav>
 
       <HolidayCalendar holidays={holidays.data} year={year} />
     </div>

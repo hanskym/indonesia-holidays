@@ -20,7 +20,6 @@ export const getTodayHoliday = (
 
 export const getUpcomingHolidays = (
   holidays: HolidayEntry[],
-  count: number = 4,
   comparisonDate: Date = new Date(),
 ): UpcomingHoliday[] => {
   const startOfDayComparison = convertToIndonesianTime(comparisonDate);
@@ -37,8 +36,7 @@ export const getUpcomingHolidays = (
       };
     })
     .filter((holiday) => holiday.daysUntil > 0)
-    .sort((a, b) => a.daysUntil - b.daysUntil)
-    .slice(0, count);
+    .sort((a, b) => a.daysUntil - b.daysUntil);
 };
 
 export const groupHolidaysByMonth = (

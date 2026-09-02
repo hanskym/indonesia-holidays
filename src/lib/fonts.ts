@@ -1,12 +1,7 @@
-import { Roboto_Flex, Roboto_Mono } from 'next/font/google';
+import { Roboto_Mono, Roboto_Serif } from 'next/font/google';
 
-/**
- * ! Bug: Turbopack error when using Roboto Flex font #74432
- * Issue: https://github.com/vercel/next.js/issues/74432
- */
-
-export const uiFontSans = Roboto_Flex({
-  variable: '--ui-font-sans',
+export const uiFontSerif = Roboto_Serif({
+  variable: '--ui-font-serif',
   subsets: ['latin'],
 });
 

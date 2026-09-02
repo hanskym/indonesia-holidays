@@ -15,25 +15,28 @@ type ImageType = 'wait' | 'wait2' | 'wait3' | 'holiday' | 'holiday2' | 'holiday3
 
 const getRandomImage = (type: ImageType) => {
   const filteredImages = Object.keys(images).filter((key) => key.includes(type)) as ImageType[];
+
   return images[filteredImages[Math.floor(Math.random() * filteredImages.length)]];
 };
 
 interface ImageDisplayProps {
   todayHoliday?: HolidayEntry;
+  isWeekend?: boolean;
 }
 
-export default function ImageDisplay({ todayHoliday }: ImageDisplayProps) {
-  const imageSrc = todayHoliday ? getRandomImage('holiday') : getRandomImage('wait');
+export default function ImageDisplay({ todayHoliday, isWeekend = false }: ImageDisplayProps) {
+  const imageSrc = todayHoliday || isWeekend ? getRandomImage('holiday') : getRandomImage('wait');
+
+  const altText = todayHoliday ? 'Holiday image' : isWeekend ? 'Weekend image' : 'Waiting image';
 
   return (
     <div className="relative aspect-video">
       <Image
-        className="size-full rounded-lg object-fill"
+        className="size-full object-fill"
         src={imageSrc}
-        alt={todayHoliday ? 'Holiday image' : 'Waiting image'}
-        width="420"
-        height="235"
-        priority
+        width={420}
+        height={235}
+        alt={altText}
         unoptimized
       />
     </div>

@@ -12,22 +12,29 @@ export default function Error({
 }) {
   return (
     <div className="flex min-h-[80dvh] flex-col items-center justify-center space-y-8">
-      <div className="text-center">
-        <h2 className="text-5xl font-bold">
-          <span className="sr-only">Error</span>Terjadi Kesalahan!
-        </h2>
-        <p className="mt-4">
+      <div className="w-full max-w-2xl space-y-5">
+        <div>
+          <span className="font-mono text-xs tracking-[0.16em] text-error uppercase">Error</span>
+
+          <h1 className="text-4xl leading-tight tracking-[-0.04em] md:text-5xl">
+            Terjadi Kesalahan!
+          </h1>
+        </div>
+
+        <p className="text-sm leading-6 text-text-muted">
           Ada masalah saat memproses permintaan. Silakan coba beberapa saat lagi.
         </p>
-      </div>
 
-      <Button onClick={() => reset()}>Muat Ulang</Button>
+        <Button onClick={() => reset()}>Muat Ulang</Button>
 
-      <div className="flex items-center justify-center gap-2">
-        Error ID:
-        <Badge className="p-1" variant="error">
-          {error.digest}
-        </Badge>
+        {error.digest && (
+          <div className="flex items-center gap-2">
+            Error ID:
+            <Badge className="p-1 font-mono" variant="error">
+              {error.digest}
+            </Badge>
+          </div>
+        )}
       </div>
     </div>
   );

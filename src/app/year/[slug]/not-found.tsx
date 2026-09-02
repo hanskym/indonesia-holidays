@@ -7,18 +7,23 @@ export default function NotFound() {
 
   return (
     <div className="flex min-h-[80dvh] flex-col items-center justify-center space-y-8">
-      <div className="text-center">
-        <h2 className="text-5xl font-bold">
-          <span className="sr-only">Error</span>404
-        </h2>
-        <p className="mt-4">
+      <div className="w-full max-w-2xl space-y-5">
+        <div>
+          <span className="font-mono text-xs tracking-[0.16em] text-error uppercase">404</span>
+
+          <h1 className="text-4xl leading-tight tracking-[-0.04em] md:text-5xl">
+            Halaman tidak ditemukan.
+          </h1>
+        </div>
+
+        <p className="text-sm leading-6 text-text-muted">
           Kalender libur untuk tahun yang Anda cari tidak ditemukan atau belum tersedia.
         </p>
-      </div>
 
-      <Link className={buttonVariants()} href={`/year/${currentYear}`}>
-        Kalender Tahun Ini
-      </Link>
+        <Link className={buttonVariants()} href={`/year/${currentYear}`}>
+          Kalender {currentYear}
+        </Link>
+      </div>
     </div>
   );
 }
