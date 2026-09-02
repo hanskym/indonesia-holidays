@@ -13,7 +13,7 @@ import useMounted from '@/hooks/use-mounted';
 export default function Header() {
   const year = new Date().getFullYear();
   const mounted = useMounted();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme: theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
