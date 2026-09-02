@@ -22,7 +22,7 @@ export async function generateStaticParams() {
   }
 
   return availableYears.data
-    .filter((year) => year <= currentYear)
+    .filter((year) => year < currentYear)
     .map((year) => ({
       slug: year.toString(),
     }));
