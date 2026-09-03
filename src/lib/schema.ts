@@ -89,3 +89,12 @@ export const apiYearsResponseSchema = z.discriminatedUnion('success', [
 ]);
 
 export type ApiYearsResponse = z.infer<typeof apiYearsResponseSchema>;
+
+export const yearSchema = z
+  .string()
+  .regex(/^\d{4}$/, 'Parameter "year" harus berupa angka 4 digit.')
+  .transform(Number)
+  .refine(
+    (year) => year >= MIN_YEAR && year <= MAX_YEAR,
+    `Parameter "year" harus antara ${MIN_YEAR}-${MAX_YEAR}.`,
+  );

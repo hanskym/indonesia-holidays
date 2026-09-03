@@ -8,6 +8,7 @@ import HolidayCalendar from '@/components/HolidayCalendar';
 import { Icons } from '@/components/ui/Icons';
 
 import { getAvailableYears, getHolidays } from '@/lib/fetch';
+import { yearSchema } from '@/lib/schema';
 
 type YearPageProps = {
   params: Promise<{ slug: string }>;
@@ -33,12 +34,14 @@ export const revalidate = 21600; // 6 hours
 export async function generateMetadata({ params }: YearPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const year = Number(slug);
   const currentYear = new Date().getFullYear();
+  const result = yearSchema.safeParse(slug);
 
-  if (Number.isNaN(year)) {
+  if (!result.success) {
     redirect(`/year/${currentYear}`);
   }
+
+  const year = result.data;
 
   return {
     title: `Kalender Libur Tahun ${year}`,
@@ -53,12 +56,14 @@ export async function generateMetadata({ params }: YearPageProps): Promise<Metad
 export default async function YearPage({ params }: YearPageProps) {
   const { slug } = await params;
 
-  const year = Number(slug);
   const currentYear = new Date().getFullYear();
+  const result = yearSchema.safeParse(slug);
 
-  if (Number.isNaN(year)) {
+  if (!result.success) {
     redirect(`/year/${currentYear}`);
   }
+
+  const year = result.data;
 
   const holidays = await getHolidays({ year });
 
