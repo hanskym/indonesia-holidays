@@ -7,6 +7,7 @@ import DataFetchError from '@/components/DataFetchError';
 import HolidayCalendar from '@/components/HolidayCalendar';
 import { Icons } from '@/components/ui/Icons';
 
+import { siteConfig } from '@/config/site';
 import { getAvailableYears, getHolidays } from '@/lib/fetch';
 import { yearSchema } from '@/lib/schema';
 
@@ -49,6 +50,29 @@ export async function generateMetadata({ params }: YearPageProps): Promise<Metad
     keywords: [`Hari Libur ${year}`, `Cuti Bersama ${year}`, 'Kalender Indonesia'],
     alternates: {
       canonical: `/year/${year}`,
+    },
+    openGraph: {
+      title: `Kalender Libur Tahun ${year} | ${siteConfig.name}`,
+      description: `Daftar lengkap hari libur nasional dan cuti bersama di Indonesia untuk tahun ${year}.`,
+      images: [
+        {
+          alt: siteConfig.name,
+          height: 630,
+          url: siteConfig.ogImage,
+          width: 1200,
+        },
+      ],
+      locale: 'id_ID',
+      siteName: siteConfig.name,
+      type: 'website',
+      url: siteConfig.url,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: siteConfig.aboutMe.socials.twitterUsername,
+      title: `Kalender Libur Tahun ${year} | ${siteConfig.name}`,
+      description: `Daftar lengkap hari libur nasional dan cuti bersama di Indonesia untuk tahun ${year}.`,
+      images: [siteConfig.ogImage],
     },
   };
 }

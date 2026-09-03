@@ -11,8 +11,32 @@ import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 export const metadata: Metadata = {
   title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
   description: siteConfig.description,
+  keywords: siteConfig.keywords,
   alternates: {
     canonical: '/',
+  },
+  openGraph: {
+    title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
+    description: siteConfig.description,
+    images: [
+      {
+        alt: siteConfig.name,
+        height: 630,
+        url: siteConfig.ogImage,
+        width: 1200,
+      },
+    ],
+    locale: 'id_ID',
+    siteName: siteConfig.name,
+    type: 'website',
+    url: siteConfig.url,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: siteConfig.aboutMe.socials.twitterUsername,
+    title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
 };
 
