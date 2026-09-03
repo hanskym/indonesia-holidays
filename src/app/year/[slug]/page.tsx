@@ -44,6 +44,9 @@ export async function generateMetadata({ params }: YearPageProps): Promise<Metad
     title: `Kalender Libur Tahun ${year}`,
     description: `Daftar lengkap hari libur nasional dan cuti bersama di Indonesia untuk tahun ${year}.`,
     keywords: [`Hari Libur ${year}`, `Cuti Bersama ${year}`, 'Kalender Indonesia'],
+    alternates: {
+      canonical: `/year/${year}`,
+    },
   };
 }
 

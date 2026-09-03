@@ -11,6 +11,9 @@ import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 export const metadata: Metadata = {
   title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
   description: siteConfig.description,
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export const revalidate = 180; // 3 minutes

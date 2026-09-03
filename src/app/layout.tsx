@@ -30,9 +30,6 @@ export const metadata: Metadata = {
   creator: siteConfig.aboutMe.fullName,
   generator: 'Next.js',
   robots: { index: true, follow: true },
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     description: siteConfig.description,
     images: [
