@@ -20,32 +20,34 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="space-y-3 font-mono text-xs tracking-[0.14em] text-text-muted uppercase lg:justify-self-end lg:text-right">
-          <Link href="/" className="block">
-            Beranda
-          </Link>
+        <div className="flex flex-col items-start gap-3 font-mono text-xs tracking-[0.14em] text-text-muted uppercase lg:items-end">
+          <Link href="/">Beranda</Link>
 
           <a
             href={siteConfig.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2"
+            className="flex items-center gap-2"
           >
             <Icons.github className="size-4" />
             GitHub
           </a>
 
-          <a
-            href="https://upset.dev/tanggalmerah"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
-            Sumber data: <span className="text-text">Tanggal Merah API</span>
-          </a>
+          <span>
+            Sumber data:{' '}
+            <a
+              href="https://upset.dev/tanggalmerah"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text"
+            >
+              Tanggal Merah API
+            </a>
+          </span>
 
-          <span className="inline-flex items-center gap-2">
-            <Icons.copyright className="size-4" /> {new Date().getFullYear()} {siteConfig.name}
+          <span className="flex items-center gap-2">
+            <Icons.copyright className="size-4" />
+            {new Date().getFullYear()} {siteConfig.name}
           </span>
         </div>
       </div>
