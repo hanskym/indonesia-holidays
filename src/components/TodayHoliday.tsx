@@ -1,7 +1,7 @@
 import ImageDisplay from '@/components/ImageDisplay';
 
 import { formatDate } from '@/lib/format';
-import { HolidayEntry } from '@/lib/types';
+import type { HolidayEntry } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 interface TodayHolidayProps {

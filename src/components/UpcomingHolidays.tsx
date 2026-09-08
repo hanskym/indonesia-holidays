@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/Badge';
 import { buttonVariants } from '@/components/ui/Button';
 
 import { formatDate } from '@/lib/format';
-import { UpcomingHoliday } from '@/lib/types';
+import type { UpcomingHoliday } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 interface UpcomingHolidaysProps {

@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/Badge';
 
 import { formatDate } from '@/lib/format';
 import { groupHolidaysByMonth } from '@/lib/parser';
-import { HolidayEntry } from '@/lib/types';
+import type { HolidayEntry } from '@/lib/types';
 
 interface HolidayCalendarProps {
   holidays: HolidayEntry[];

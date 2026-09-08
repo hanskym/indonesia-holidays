@@ -4,9 +4,14 @@ export type HolidayEntry = {
   isLeave: boolean;
 };
 
-export interface UpcomingHoliday extends HolidayEntry {
+export type UpcomingHoliday = HolidayEntry & {
   daysUntil: number;
-}
+};
+
+export type HolidaysByMonth = {
+  month: string;
+  holidays: HolidayEntry[];
+};
 
 export type FetchStatus =
   'OK' | 'INVALID_PARAMS' | 'DATA_NOT_AVAILABLE' | 'THIRD_PARTY_UNAVAILABLE' | 'UNKNOWN';

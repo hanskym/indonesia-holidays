@@ -1,7 +1,7 @@
 import { compareAsc, differenceInDays, isSameDay } from 'date-fns';
 
 import { convertToIndonesianTime, formatDate } from '@/lib/format';
-import type { HolidayEntry, UpcomingHoliday } from '@/lib/types';
+import type { HolidayEntry, HolidaysByMonth, UpcomingHoliday } from '@/lib/types';
 
 export const getTodayHoliday = (
   holidays: HolidayEntry[],
@@ -39,10 +39,7 @@ export const getUpcomingHolidays = (
     .sort((a, b) => a.daysUntil - b.daysUntil);
 };
 
-export const groupHolidaysByMonth = (
-  holidays: HolidayEntry[],
-  year: number,
-): { month: string; holidays: HolidayEntry[] }[] => {
+export const groupHolidaysByMonth = (holidays: HolidayEntry[], year: number): HolidaysByMonth[] => {
   const sortedHolidays = [...holidays].sort((a, b) =>
     compareAsc(new Date(a.holidayDate), new Date(b.holidayDate)),
   );

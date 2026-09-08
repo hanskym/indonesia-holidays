@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { HolidayEntry } from '@/lib/types';
+import type { HolidayEntry } from '@/lib/types';
 
 const images = {
   wait: '/assets/wait.webp',
