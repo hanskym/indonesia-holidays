@@ -20,7 +20,10 @@ export default function NotFound() {
           Kalender libur untuk tahun yang Anda cari tidak ditemukan atau belum tersedia.
         </p>
 
-        <Link className={buttonVariants()} href={`/year/${currentYear}`}>
+        <Link
+          className={buttonVariants({ className: 'font-mono uppercase md:text-sm', size: 'sm' })}
+          href={`/year/${currentYear}`}
+        >
           Kalender {currentYear}
         </Link>
       </div>

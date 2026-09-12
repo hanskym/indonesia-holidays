@@ -5,7 +5,6 @@ import { buttonVariants } from '@/components/ui/Button';
 
 import { formatDate } from '@/lib/format';
 import type { UpcomingHoliday } from '@/lib/types';
-import { cn } from '@/lib/utils';
 
 interface UpcomingHolidaysProps {
   holidaysToShow: UpcomingHoliday[];
@@ -30,10 +29,8 @@ export default function UpcomingHolidays({ holidaysToShow, year }: UpcomingHolid
         </div>
 
         <Link
+          className={buttonVariants({ className: 'font-mono uppercase md:text-sm', size: 'sm' })}
           href={`/year/${year}`}
-          className={cn(
-            buttonVariants({ className: 'font-mono uppercase md:text-xs lg:text-sm', size: 'sm' }),
-          )}
         >
           Arsip {year}
         </Link>

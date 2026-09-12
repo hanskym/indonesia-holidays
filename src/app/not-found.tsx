@@ -24,7 +24,10 @@ export default function NotFound() {
           Halaman yang Anda cari mungkin telah dipindahkan, dihapus, atau tidak pernah tersedia.
         </p>
 
-        <Link className={buttonVariants()} href="/">
+        <Link
+          className={buttonVariants({ className: 'font-mono uppercase md:text-sm', size: 'sm' })}
+          href="/"
+        >
           Halaman Utama
         </Link>
       </div>

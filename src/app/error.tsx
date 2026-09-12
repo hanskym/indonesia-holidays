@@ -25,7 +25,9 @@ export default function Error({
           Ada masalah saat memproses permintaan. Silakan coba beberapa saat lagi.
         </p>
 
-        <Button onClick={() => reset()}>Muat Ulang</Button>
+        <Button className="font-mono uppercase md:text-sm" size="sm" onClick={() => reset()}>
+          Muat Ulang
+        </Button>
 
         {error.digest && (
           <div className="flex items-center gap-2">
