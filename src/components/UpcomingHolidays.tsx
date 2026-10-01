@@ -32,7 +32,7 @@ export default function UpcomingHolidays({ holidaysToShow, year }: UpcomingHolid
           className={buttonVariants({ className: 'font-mono uppercase md:text-sm', size: 'sm' })}
           href={`/year/${year}`}
         >
-          Arsip {year}
+          Kalender {year}
         </Link>
       </header>
 
