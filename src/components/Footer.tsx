@@ -9,7 +9,7 @@ import { siteConfig } from '@/config/site';
 export default function Footer() {
   return (
     <footer className="mt-12 border-t border-border py-8">
-      <div className="grid gap-10 lg:grid-cols-2">
+      <div className="grid gap-10 md:grid-cols-2">
         <div>
           <p className="font-mono text-xs tracking-[0.16em] text-text-muted uppercase">
             {siteConfig.name}
@@ -20,7 +20,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex flex-col items-start gap-3 font-mono text-xs tracking-[0.14em] text-text-muted uppercase lg:items-end">
+        <div className="flex flex-col items-start gap-3 font-mono text-xs tracking-[0.14em] text-text-muted uppercase md:items-end">
           <Link href="/">Beranda</Link>
 
           <a

@@ -35,7 +35,7 @@ export default function Header() {
 
           <Link href={`/year/${year}`} className="group ml-auto flex items-center gap-3">
             <span className="font-mono text-[10px] tracking-[0.16em] text-text-muted uppercase">
-              Kalender
+              Tahun
             </span>
 
             <span className="text-base leading-none tracking-[-0.03em] italic">{year}</span>
