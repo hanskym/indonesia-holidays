@@ -9,6 +9,7 @@ import { Icons } from '@/components/ui/Icons';
 
 import { siteConfig } from '@/config/site';
 import { getAvailableYears, getHolidays } from '@/lib/fetch';
+import { formatDate } from '@/lib/format';
 import { yearSchema } from '@/lib/schema';
 
 type YearPageProps = {
@@ -16,7 +17,7 @@ type YearPageProps = {
 };
 
 export async function generateStaticParams() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
   const availableYears = await getAvailableYears();
 
   if (availableYears.status !== 'OK') {
@@ -35,7 +36,7 @@ export const revalidate = 21600; // 6 hours
 export async function generateMetadata({ params }: YearPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
   const result = yearSchema.safeParse(slug);
 
   if (!result.success) {
@@ -80,7 +81,7 @@ export async function generateMetadata({ params }: YearPageProps): Promise<Metad
 export default async function YearPage({ params }: YearPageProps) {
   const { slug } = await params;
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
   const result = yearSchema.safeParse(slug);
 
   if (!result.success) {

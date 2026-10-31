@@ -2,9 +2,10 @@ import { MetadataRoute } from 'next';
 
 import { siteConfig } from '@/config/site';
 import { getAvailableYears } from '@/lib/fetch';
+import { formatDate } from '@/lib/format';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const currentYear = new Date().getFullYear();
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
   const availableYears = await getAvailableYears();
 
   const staticEntries: MetadataRoute.Sitemap = [

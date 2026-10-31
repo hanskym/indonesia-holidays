@@ -1,4 +1,4 @@
-import { compareAsc, differenceInDays, isSameDay } from 'date-fns';
+import { differenceInDays, isSameDay } from 'date-fns';
 
 import { convertToIndonesianTime, formatDate } from '@/lib/format';
 import type { HolidayEntry, HolidaysByMonth, UpcomingHoliday } from '@/lib/types';
@@ -41,17 +41,18 @@ export const getUpcomingHolidays = (
 
 export const groupHolidaysByMonth = (holidays: HolidayEntry[], year: number): HolidaysByMonth[] => {
   const sortedHolidays = [...holidays].sort((a, b) =>
-    compareAsc(new Date(a.holidayDate), new Date(b.holidayDate)),
+    formatDate(a.holidayDate, 'yyyy-MM-dd').localeCompare(formatDate(b.holidayDate, 'yyyy-MM-dd')),
   );
 
   return Array.from({ length: 12 }, (_, index) => {
-    const monthHolidays = sortedHolidays.filter((holiday) => {
-      const holidayDate = new Date(holiday.holidayDate);
-      return holidayDate.getMonth() === index && holidayDate.getFullYear() === year;
-    });
+    const monthKey = `${year}-${String(index + 1).padStart(2, '0')}`;
+
+    const monthHolidays = sortedHolidays.filter(
+      (holiday) => formatDate(holiday.holidayDate, 'yyyy-MM') === monthKey,
+    );
 
     return {
-      month: formatDate(new Date(year, index), 'MMMM'),
+      month: formatDate(`${monthKey}-01`, 'MMMM'),
       holidays: monthHolidays,
     };
   });

@@ -9,9 +9,10 @@ import { Icons } from '@/components/ui/Icons';
 
 import { siteConfig } from '@/config/site';
 import useMounted from '@/hooks/use-mounted';
+import { formatDate } from '@/lib/format';
 
 export default function Header() {
-  const year = new Date().getFullYear();
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
   const mounted = useMounted();
   const { resolvedTheme: theme, setTheme } = useTheme();
 
@@ -33,12 +34,12 @@ export default function Header() {
             </span>
           </Link>
 
-          <Link href={`/year/${year}`} className="group ml-auto flex items-center gap-3">
+          <Link href={`/year/${currentYear}`} className="group ml-auto flex items-center gap-3">
             <span className="font-mono text-[10px] tracking-[0.16em] text-text-muted uppercase">
               Tahun
             </span>
 
-            <span className="text-base leading-none tracking-[-0.03em] italic">{year}</span>
+            <span className="text-base leading-none tracking-[-0.03em] italic">{currentYear}</span>
 
             <Icons.arrowtopright className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
           </Link>

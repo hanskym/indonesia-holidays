@@ -2,8 +2,10 @@ import { Link } from 'next-view-transitions';
 
 import { buttonVariants } from '@/components/ui/Button';
 
+import { formatDate } from '@/lib/format';
+
 export default function NotFound() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
 
   return (
     <div className="flex min-h-[80dvh] flex-col items-center justify-center space-y-8">
