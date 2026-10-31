@@ -9,6 +9,8 @@ import { getHolidays } from '@/lib/fetch';
 import { formatDate } from '@/lib/format';
 import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 
+export const revalidate = 180; // 3 minutes
+
 export const metadata: Metadata = {
   title: `Cek Hari Libur Sekarang | ${siteConfig.name}`,
   description: siteConfig.description,
@@ -40,8 +42,6 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
   },
 };
-
-export const revalidate = 180; // 3 minutes
 
 export default async function HomePage() {
   const now = new Date();

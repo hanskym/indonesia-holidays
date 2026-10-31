@@ -16,21 +16,6 @@ type YearPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  const currentYear = Number(formatDate(new Date(), 'yyyy'));
-  const availableYears = await getAvailableYears();
-
-  if (availableYears.status !== 'OK') {
-    return [];
-  }
-
-  return availableYears.data
-    .filter((year) => year < currentYear)
-    .map((year) => ({
-      slug: year.toString(),
-    }));
-}
-
 export const revalidate = 21600; // 6 hours
 
 export async function generateMetadata({ params }: YearPageProps): Promise<Metadata> {
@@ -76,6 +61,21 @@ export async function generateMetadata({ params }: YearPageProps): Promise<Metad
       images: [siteConfig.ogImage],
     },
   };
+}
+
+export async function generateStaticParams() {
+  const currentYear = Number(formatDate(new Date(), 'yyyy'));
+  const availableYears = await getAvailableYears();
+
+  if (availableYears.status !== 'OK') {
+    return [];
+  }
+
+  return availableYears.data
+    .filter((year) => year < currentYear)
+    .map((year) => ({
+      slug: year.toString(),
+    }));
 }
 
 export default async function YearPage({ params }: YearPageProps) {
