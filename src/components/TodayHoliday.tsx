@@ -16,7 +16,8 @@ export default function TodayHoliday({ currentDate, todayHoliday, lastFetch }: T
   const year = formatDate(currentDate, 'yyyy');
   const weekday = formatDate(currentDate, 'EEEE');
 
-  const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+  const weekdayNumber = Number(formatDate(currentDate, 'i'));
+  const isWeekend = weekdayNumber >= 6;
 
   const statusDescription = todayHoliday
     ? todayHoliday.isLeave
@@ -70,7 +71,7 @@ export default function TodayHoliday({ currentDate, todayHoliday, lastFetch }: T
           {todayHoliday && (
             <div>
               <p className="font-mono text-[10px] tracking-[0.3em] text-text-muted uppercase">
-                Libur Nasional
+                {todayHoliday.isLeave ? 'Cuti Bersama' : 'Libur Nasional'}
               </p>
 
               <p className="text-xl leading-snug font-medium">{todayHoliday.holidayName}</p>
@@ -108,7 +109,7 @@ export default function TodayHoliday({ currentDate, todayHoliday, lastFetch }: T
               Status: {todayHoliday ? 'Hari Libur' : isWeekend ? 'Akhir Pekan' : 'Hari Kerja'}
             </span>
             <span className="hidden md:inline">•</span>
-            <span>Edisi {currentDate.getFullYear()}</span>
+            <span>Edisi {year}</span>
           </div>
         </figcaption>
       </figure>

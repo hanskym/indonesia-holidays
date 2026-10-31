@@ -6,6 +6,7 @@ import UpcomingHolidays from '@/components/UpcomingHolidays';
 
 import { siteConfig } from '@/config/site';
 import { getHolidays } from '@/lib/fetch';
+import { formatDate } from '@/lib/format';
 import { getTodayHoliday, getUpcomingHolidays } from '@/lib/parser';
 
 export const metadata: Metadata = {
@@ -44,7 +45,7 @@ export const revalidate = 180; // 3 minutes
 
 export default async function HomePage() {
   const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
+  const currentYear = Number(formatDate(currentDate, 'yyyy'));
 
   const currentYearResult = await getHolidays({
     year: currentYear,
