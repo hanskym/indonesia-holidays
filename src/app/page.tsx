@@ -44,8 +44,8 @@ export const metadata: Metadata = {
 export const revalidate = 180; // 3 minutes
 
 export default async function HomePage() {
-  const currentDate = new Date();
-  const currentYear = Number(formatDate(currentDate, 'yyyy'));
+  const now = new Date();
+  const currentYear = Number(formatDate(now, 'yyyy'));
 
   const currentYearResult = await getHolidays({
     year: currentYear,
@@ -71,12 +71,12 @@ export default async function HomePage() {
     lastFetch = nextYearResult.lastFetch ?? lastFetch;
   }
 
-  const todayHoliday = getTodayHoliday(allHolidays, currentDate);
-  const upcomingHolidays = getUpcomingHolidays(allHolidays, currentDate);
+  const todayHoliday = getTodayHoliday(allHolidays, now);
+  const upcomingHolidays = getUpcomingHolidays(allHolidays, now);
 
   return (
     <div className="grid grid-cols-1 items-stretch gap-y-8 pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:divide-x lg:divide-border lg:pt-10">
-      <TodayHoliday currentDate={currentDate} todayHoliday={todayHoliday} lastFetch={lastFetch} />
+      <TodayHoliday currentDate={now} todayHoliday={todayHoliday} lastFetch={lastFetch} />
 
       <UpcomingHolidays holidaysToShow={upcomingHolidays} year={currentYear} />
     </div>
