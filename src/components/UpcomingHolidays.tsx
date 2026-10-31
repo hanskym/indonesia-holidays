@@ -5,6 +5,7 @@ import { buttonVariants } from '@/components/ui/Button';
 
 import { formatDate } from '@/lib/format';
 import type { UpcomingHoliday } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface UpcomingHolidaysProps {
   holidaysToShow: UpcomingHoliday[];
@@ -29,7 +30,7 @@ export default function UpcomingHolidays({ holidaysToShow, year }: UpcomingHolid
         </div>
 
         <Link
-          className={buttonVariants({ className: 'font-mono uppercase md:text-sm', size: 'sm' })}
+          className={cn(buttonVariants({ size: 'sm' }), 'font-mono uppercase md:text-sm')}
           href={`/year/${year}`}
         >
           Kalender {year}
@@ -41,13 +42,13 @@ export default function UpcomingHolidays({ holidaysToShow, year }: UpcomingHolid
           holidaysToShow.map((holiday, index) => (
             <article
               key={holiday.holidayDate.toString()}
-              className="grid grid-cols-[28px_minmax(0,1fr)_auto] items-start gap-3 py-4 pr-1 md:grid-cols-[36px_minmax(0,1fr)_auto] md:py-5"
+              className="grid grid-cols-[28px_minmax(0,1fr)_auto] items-start gap-3 py-4 pr-2 md:grid-cols-[36px_minmax(0,1fr)_auto] md:py-5"
             >
-              <span className="pt-0.5 font-mono text-[10px] tracking-[0.3em] text-text-muted">
+              <span className="pt-0.5 text-center font-mono text-[10px] tracking-[0.3em] text-text-muted">
                 {String(index + 1).padStart(2, '0')}
               </span>
 
-              <div className="min-w-0 pr-2">
+              <div className="min-w-0">
                 <h3 className="text-base leading-snug font-medium tracking-tight md:text-lg lg:text-xl">
                   {holiday.holidayName}
                 </h3>

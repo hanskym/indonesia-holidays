@@ -103,22 +103,22 @@ export default async function YearPage({ params }: YearPageProps) {
   return (
     <div>
       <nav
-        className="grid grid-cols-[1fr_auto_1fr] items-center border-b border-border py-5 font-mono text-xs tracking-[0.14em] uppercase"
+        className="sticky top-24 z-40 grid grid-cols-[1fr_auto_1fr] items-center border-b border-border bg-background py-2 font-mono text-xs tracking-[0.14em] uppercase"
         aria-label="Navigasi tahun"
       >
         <Link
           href={`/year/${year - 1}`}
-          className="inline-flex items-center gap-1 justify-self-start transition-colors hover:text-text-muted"
+          className="inline-flex min-h-10 items-center gap-1 justify-self-start px-2 transition-colors hover:text-text-muted"
         >
           <Icons.arrowleft className="size-3" />
           {year - 1}
         </Link>
 
-        <span className="px-5">{year}</span>
+        <span className="inline-flex min-h-10 items-center">{year}</span>
 
         <Link
           href={`/year/${year + 1}`}
-          className="inline-flex items-center gap-1 justify-self-end transition-colors hover:text-text-muted"
+          className="inline-flex min-h-10 items-center gap-1 justify-self-end px-2 transition-colors hover:text-text-muted"
         >
           {year + 1}
           <Icons.arrowright className="size-3" />

@@ -4,6 +4,8 @@ import { Link } from 'next-view-transitions';
 
 import { buttonVariants } from '@/components/ui/Button';
 
+import { cn } from '@/lib/utils';
+
 export const metadata: Metadata = {
   title: '404 Halaman tidak ditemukan',
 };
@@ -25,7 +27,7 @@ export default function NotFound() {
         </p>
 
         <Link
-          className={buttonVariants({ className: 'font-mono uppercase md:text-sm', size: 'sm' })}
+          className={cn(buttonVariants({ size: 'sm' }), 'font-mono uppercase md:text-sm')}
           href="/"
         >
           Halaman Utama
